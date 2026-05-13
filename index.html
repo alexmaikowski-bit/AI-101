@@ -867,19 +867,19 @@
   }
   .custom-idea-result { margin-top: 16px; }
 
-  /* ── NOTES SIDEBAR ───────────────────────────── */
-  .notes-toggle {
+  /* ── FLOATING TOOLS (Notes + Ask Gemini, stacked bottom-right) ── */
+  .notes-toggle,
+  .gemini-toggle {
     position: fixed;
-    bottom: 24px;
     right: 24px;
     z-index: 80;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 12px 16px;
-    background: var(--ink);
+    background: var(--accent-deep);
     color: var(--paper);
-    border: 1px solid var(--ink);
+    border: 1px solid var(--accent-deep);
     border-radius: 2px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -888,12 +888,30 @@
     cursor: pointer;
     font-weight: 500;
     box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-    transition: background 0.2s;
+    transition: background 0.2s, border-color 0.2s;
   }
-  .notes-toggle:hover { background: var(--accent-deep); }
-  .notes-toggle.open { background: var(--accent-deep); }
-  .notes-toggle svg { width: 14px; height: 14px; stroke: var(--accent); transition: stroke 0.2s; }
-  .notes-toggle:hover svg { stroke: var(--paper); }
+  .gemini-toggle { bottom: 24px; }
+  .notes-toggle  { bottom: 80px; }
+  .notes-toggle:hover,
+  .gemini-toggle:hover,
+  .notes-toggle.open,
+  .gemini-toggle.open {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .notes-toggle svg,
+  .gemini-toggle svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--paper);
+    transition: stroke 0.2s;
+  }
+  .notes-toggle:hover svg,
+  .gemini-toggle:hover svg,
+  .notes-toggle.open svg,
+  .gemini-toggle.open svg {
+    stroke: var(--accent);
+  }
   .notes-panel {
     position: fixed;
     top: 0;
@@ -912,6 +930,173 @@
     box-shadow: -12px 0 32px rgba(0,0,0,0.2);
   }
   .notes-panel.open { transform: translateX(0); }
+  .gemini-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 460px;
+    max-width: 95vw;
+    z-index: 70;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    box-shadow: -12px 0 32px rgba(0,0,0,0.2);
+  }
+  .gemini-panel.open { transform: translateX(0); }
+  .gemini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 24px;
+    border-bottom: 1px solid rgba(250,248,243,0.15);
+  }
+  .gemini-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .gemini-close {
+    background: transparent;
+    border: 1px solid rgba(250,248,243,0.2);
+    color: var(--paper);
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .gemini-close:hover { border-color: var(--accent); color: var(--accent); }
+  .gemini-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .gemini-intro { display: flex; flex-direction: column; gap: 14px; }
+  .gemini-intro > p {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(250,248,243,0.85);
+  }
+  .gemini-suggestions-label {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: var(--accent) !important;
+    font-weight: 700 !important;
+    margin-top: 6px !important;
+  }
+  .gemini-suggestions { display: flex; flex-direction: column; gap: 8px; }
+  .suggestion-chip {
+    background: transparent;
+    border: 1px solid rgba(250,248,243,0.2);
+    color: var(--paper);
+    padding: 10px 14px;
+    border-radius: 2px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+    line-height: 1.4;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .suggestion-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,255,0.08);
+  }
+  .gemini-message {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .gemini-message-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .gemini-message.user { align-items: flex-end; }
+  .gemini-message.user .gemini-message-label { color: rgba(250,248,243,0.6); }
+  .gemini-message.bot .gemini-message-label { color: var(--accent); }
+  .gemini-message-bubble {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--paper);
+  }
+  .gemini-message.user .gemini-message-bubble {
+    background: rgba(250,248,243,0.06);
+    border: 1px solid rgba(250,248,243,0.12);
+    border-radius: 2px;
+    padding: 10px 14px;
+    max-width: 85%;
+  }
+  .gemini-message.loading .gemini-message-bubble {
+    color: rgba(250,248,243,0.55);
+    font-style: italic;
+  }
+  .gemini-input-form {
+    display: flex;
+    gap: 8px;
+    padding: 16px 20px 20px;
+    border-top: 1px solid rgba(250,248,243,0.15);
+  }
+  #gemini-input {
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(250,248,243,0.2);
+    color: var(--paper);
+    padding: 10px 12px;
+    border-radius: 2px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    outline: none;
+    resize: none;
+    min-height: 40px;
+    max-height: 120px;
+  }
+  #gemini-input:focus { border-color: var(--accent); }
+  #gemini-input::placeholder { color: rgba(250,248,243,0.4); }
+  .gemini-send {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: var(--ink);
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .gemini-send:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--paper); }
+  .gemini-send svg { width: 16px; height: 16px; stroke: currentColor; }
+  .gemini-send:disabled { opacity: 0.5; cursor: not-allowed; }
   .notes-header {
     display: flex;
     justify-content: space-between;
@@ -986,8 +1171,11 @@
     .iwant-menu { right: auto; left: 0; min-width: 280px; }
     .where { padding: 60px 20px; }
     .custom-idea { padding: 60px 20px; }
-    .notes-toggle { bottom: 16px; right: 16px; }
+    .gemini-toggle { bottom: 16px; right: 16px; padding: 10px 14px; }
+    .notes-toggle  { bottom: 68px; right: 16px; padding: 10px 14px; }
+    .gemini-toggle span,
     .notes-toggle span { display: none; }
+    .gemini-panel { width: 100%; }
     .where-grid { grid-template-columns: 1fr; }
     .where-tool { padding: 24px 0 !important; border-right: none !important; border-bottom: 1px solid var(--line); margin: 0 !important; }
     .where-tool:last-child { border-bottom: none; }
@@ -1731,6 +1919,36 @@ Before you build, ask me which audience or product line within the brand I want 
   <span class="notes-meta">Saved locally to your browser</span>
 </aside>
 
+<!-- ─────────────────────── ASK GEMINI ─────────────────────── -->
+<button class="gemini-toggle" aria-label="Ask Gemini" aria-expanded="false">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l1.8 5.7L19.5 9.5l-5.7 1.8L12 17l-1.8-5.7L4.5 9.5l5.7-1.8L12 2zM19 14l.9 2.6 2.6.9-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14z" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  <span>Ask Gemini</span>
+</button>
+<aside class="gemini-panel" aria-hidden="true">
+  <div class="gemini-header">
+    <span class="gemini-title">&rarr; Ask Gemini</span>
+    <button class="gemini-close" aria-label="Close">&times;</button>
+  </div>
+  <div class="gemini-messages" id="gemini-messages">
+    <div class="gemini-intro">
+      <p>I'm a Gemini guide for this page. Help me help you — think through builds, sharpen prompts, find references, or push back when something's looking generic.</p>
+      <p class="gemini-suggestions-label">Try one of these:</p>
+      <div class="gemini-suggestions">
+        <button class="suggestion-chip">Help me think through what to build first</button>
+        <button class="suggestion-chip">What makes a good starter prompt?</button>
+        <button class="suggestion-chip">My build looks too AI-generated. How do I fix it?</button>
+        <button class="suggestion-chip">Show me how to give the model taste references</button>
+      </div>
+    </div>
+  </div>
+  <form class="gemini-input-form" id="gemini-form">
+    <textarea id="gemini-input" placeholder="Ask anything…" rows="1"></textarea>
+    <button type="submit" class="gemini-send" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </form>
+</aside>
+
 <script>
   document.querySelectorAll('.step-head').forEach(head => {
     head.addEventListener('click', () => {
@@ -1888,6 +2106,15 @@ If you're running this locally, deploy to Vercel and set GEMINI_API_KEY as an en
   if (notesToggle && notesPanel && notesTextarea) {
     notesTextarea.value = localStorage.getItem('build-with-ai-notes') || '';
     const open = () => {
+      // close gemini panel if it's open
+      const gp = document.querySelector('.gemini-panel');
+      const gt = document.querySelector('.gemini-toggle');
+      if (gp?.classList.contains('open')) {
+        gp.classList.remove('open');
+        gt?.classList.remove('open');
+        gp.setAttribute('aria-hidden', 'true');
+        gt?.setAttribute('aria-expanded', 'false');
+      }
       notesPanel.classList.add('open');
       notesToggle.classList.add('open');
       notesPanel.setAttribute('aria-hidden', 'false');
@@ -1911,6 +2138,149 @@ If you're running this locally, deploy to Vercel and set GEMINI_API_KEY as an en
         localStorage.setItem('build-with-ai-notes', notesTextarea.value);
       }, 300);
     });
+  }
+
+  // ── Ask Gemini chat ───────────────────────────
+  const geminiToggle = document.querySelector('.gemini-toggle');
+  const geminiPanel = document.querySelector('.gemini-panel');
+  const geminiClose = document.querySelector('.gemini-close');
+  const geminiMessages = document.getElementById('gemini-messages');
+  const geminiForm = document.getElementById('gemini-form');
+  const geminiInput = document.getElementById('gemini-input');
+  const geminiSend = geminiForm?.querySelector('.gemini-send');
+
+  let chatHistory = [];
+
+  if (geminiToggle && geminiPanel && geminiForm) {
+    try {
+      const saved = localStorage.getItem('build-with-ai-chat');
+      if (saved) {
+        chatHistory = JSON.parse(saved);
+        if (chatHistory.length > 0) renderChat();
+      }
+    } catch (e) {}
+
+    const openGemini = () => {
+      // close notes panel if it's open
+      const np = document.querySelector('.notes-panel');
+      const nt = document.querySelector('.notes-toggle');
+      if (np?.classList.contains('open')) {
+        np.classList.remove('open');
+        nt?.classList.remove('open');
+        np.setAttribute('aria-hidden', 'true');
+        nt?.setAttribute('aria-expanded', 'false');
+      }
+      geminiPanel.classList.add('open');
+      geminiToggle.classList.add('open');
+      geminiPanel.setAttribute('aria-hidden', 'false');
+      geminiToggle.setAttribute('aria-expanded', 'true');
+      setTimeout(() => geminiInput?.focus(), 200);
+    };
+    const closeGemini = () => {
+      geminiPanel.classList.remove('open');
+      geminiToggle.classList.remove('open');
+      geminiPanel.setAttribute('aria-hidden', 'true');
+      geminiToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    geminiToggle.addEventListener('click', () => {
+      if (geminiPanel.classList.contains('open')) closeGemini();
+      else openGemini();
+    });
+    geminiClose?.addEventListener('click', closeGemini);
+
+    document.querySelectorAll('.suggestion-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        geminiInput.value = chip.textContent.trim();
+        geminiForm.requestSubmit();
+      });
+    });
+
+    geminiInput?.addEventListener('input', () => {
+      geminiInput.style.height = 'auto';
+      geminiInput.style.height = Math.min(geminiInput.scrollHeight, 120) + 'px';
+    });
+
+    geminiInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        geminiForm.requestSubmit();
+      }
+    });
+
+    geminiForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = geminiInput.value.trim();
+      if (!text || geminiSend.disabled) return;
+
+      chatHistory.push({ role: 'user', content: text });
+      renderChat();
+      geminiInput.value = '';
+      geminiInput.style.height = 'auto';
+      saveChat();
+
+      chatHistory.push({ role: 'model', content: 'Thinking…', loading: true });
+      renderChat();
+      geminiSend.disabled = true;
+
+      try {
+        const response = await fetch('/api/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: chatHistory.filter(m => !m.loading).map(m => ({
+              role: m.role === 'user' ? 'user' : 'model',
+              content: m.content
+            }))
+          })
+        });
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error || `Request failed (${response.status})`);
+        }
+        const data = await response.json();
+        chatHistory.pop();
+        chatHistory.push({ role: 'model', content: data.reply || '' });
+        renderChat();
+        saveChat();
+      } catch (err) {
+        chatHistory.pop();
+        chatHistory.push({
+          role: 'model',
+          content: 'Sorry — something went wrong: ' + (err.message || 'unknown error') + '\n\nIf this persists, check that GEMINI_API_KEY is set in your Vercel environment variables.'
+        });
+        renderChat();
+      } finally {
+        geminiSend.disabled = false;
+        geminiInput?.focus();
+      }
+    });
+
+    function renderChat() {
+      const intro = geminiMessages.querySelector('.gemini-intro');
+      if (chatHistory.length > 0 && intro) intro.remove();
+      geminiMessages.querySelectorAll('.gemini-message').forEach(el => el.remove());
+      chatHistory.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'gemini-message ' + (msg.role === 'user' ? 'user' : 'bot') + (msg.loading ? ' loading' : '');
+        const label = document.createElement('span');
+        label.className = 'gemini-message-label';
+        label.textContent = msg.role === 'user' ? 'You' : '→ Gemini';
+        const bubble = document.createElement('div');
+        bubble.className = 'gemini-message-bubble';
+        bubble.textContent = msg.content;
+        div.appendChild(label);
+        div.appendChild(bubble);
+        geminiMessages.appendChild(div);
+      });
+      geminiMessages.scrollTop = geminiMessages.scrollHeight;
+    }
+
+    function saveChat() {
+      try {
+        localStorage.setItem('build-with-ai-chat', JSON.stringify(chatHistory.filter(m => !m.loading)));
+      } catch (e) {}
+    }
   }
 
 </script>
