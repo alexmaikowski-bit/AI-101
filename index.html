@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BUILD WITH AI / A SEVEN-STEP FIELD GUIDE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Editorial paper palette */
+    --paper: #FAF8F3;
+    --paper-2: #F2EFE7;
+    --paper-3: #E8E4D8;
+    --ink: #18181B;
+    --ink-soft: #3F3F46;
+    --ink-quiet: #71717A;
+
+    /* Neon accent — one voice */
+    --accent:      #00E5FF;
+    --accent-deep: #0E7490;
+
+    --line: rgba(24,24,27,0.10);
+    --line-strong: rgba(24,24,27,0.20);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+  .serif { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* subtle grain so it doesn't look like flat CSS */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    opacity: 0.04; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-quiet);
+  }
+
+  /* ── CHIP SYSTEM ────────────────────────────────── */
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 2px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .chip.solid-accent { background: var(--accent); border-color: var(--ink); color: var(--ink); }
+  .chip.solid-ink    { background: var(--ink);   border-color: var(--ink); color: var(--paper); }
+
+  /* ── TOP META BAR ───────────────────────────────── */
+  .meta-bar {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    background: rgba(250,248,243,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .meta-bar .pulse {
+    display: inline-block; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+    margin-right: 8px; animation: pulse 2s infinite;
+    box-shadow: 0 0 0 0 rgba(0,229,255,0.6);
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,229,255,0.5); }
+    50%     { opacity: .5; box-shadow: 0 0 0 6px rgba(0,229,255,0); }
+  }
+
+  /* ── HERO ───────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    padding: 120px 32px 80px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 40px; flex-wrap: wrap;
+  }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 7.4vw, 108px);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin: 56px 0 40px;
+    max-width: 1100px;
+    color: var(--ink);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent-deep);
+    font-weight: 400;
+  }
+  .hero-title .underline-accent {
+    background: linear-gradient(180deg, transparent 60%, var(--accent) 60%);
+    padding: 0 4px;
+  }
+  .hero-subline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(17px, 1.8vw, 22px);
+    font-weight: 400;
+    color: var(--ink-soft);
+    max-width: 760px;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    margin-top: -20px;
+  }
+  .hero-subline em { font-style: italic; color: var(--accent-deep); font-weight: 500; }
+
+  @media (max-width: 720px) {
+    .hero-title { margin: 40px 0; }
+  }
+
+  /* ── INTRO / THREE PILLARS ──────────────────────── */
+  .intro {
+    padding: 100px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--line);
+  }
+  .intro .label { margin-bottom: 48px; display: block; }
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    padding-top: 56px;
+  }
+  .pillar {
+    padding: 0 32px 0 0;
+    border-right: 1px solid var(--line);
+  }
+  .pillar:last-child { border-right: none; padding-right: 0; }
+  .pillar:not(:first-child) { padding-left: 32px; }
+  .pillar .chip { margin-bottom: 24px; }
+  .pillar h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(28px, 2.8vw, 38px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+  .pillar h3 em { font-style: italic; color: var(--accent-deep); }
+  .pillar p {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .pillar p em { font-style: italic; color: var(--accent-deep); font-weight: 500; }
+  @media (max-width: 900px) {
+    .pillars { grid-template-columns: 1fr; padding-top: 32px; }
+    .pillar { border-right: none; border-bottom: 1px solid var(--line); padding: 28px 0 !important; }
+    .pillar:last-child { border-bottom: none; }
+  }
+
+  /* ── STEPS SECTION ──────────────────────────────── */
+  .steps-section { padding: 80px 0 40px; }
+  .steps-header {
+    padding: 0 32px;
+    max-width: 1400px;
+    margin: 0 auto 60px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 40px;
+  }
+  .steps-header h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .steps-header h2 em { font-style: italic; color: var(--accent-deep); }
+  .steps-header .meta-block {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-quiet);
+    line-height: 1.7;
+  }
+
+  /* Unified accent — appears only on the active step */
+  .step {
+    border-top: 1px solid var(--line);
+    box-shadow: inset 4px 0 0 transparent;
+    transition: background 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+  .step:last-child { border-bottom: 1px solid var(--line); }
+  .step:hover { background: rgba(24,24,27,0.015); box-shadow: inset 4px 0 0 var(--accent); }
+  .step.open  { background: var(--paper-2);         box-shadow: inset 4px 0 0 var(--accent); }
+
+  .step-head {
+    padding: 36px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    gap: 32px;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .step-title em { font-style: italic; color: var(--accent-deep); }
+
+  .step-toggle {
+    width: 40px; height: 40px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+    background: transparent;
+  }
+  .step.open .step-toggle { background: var(--ink); border-color: var(--ink); }
+  .step-toggle svg { width: 16px; height: 16px; transition: transform 0.3s; }
+  .step.open .step-toggle svg { transform: rotate(180deg); }
+  .step-toggle path { stroke: var(--ink); }
+  .step.open .step-toggle path { stroke: var(--paper); }
+
+  .step-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+  .step.open .step-body { max-height: 4000px; }
+  .step-body-inner {
+    padding: 0 32px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 32px;
+  }
+  .step-body-content { max-width: 760px; }
+  .step-body-content > * + * { margin-top: 28px; }
+  .step-body-content .lead {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+  .step-body-content p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .step-body-content p strong { color: var(--ink); font-weight: 600; }
+
+  /* unified accent callout */
+  .callout {
+    border-left: 3px solid var(--accent);
+    padding: 18px 0 18px 24px;
+    margin: 28px 0;
+    background: var(--paper);
+  }
+  .callout .label {
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .callout p {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .quote-box {
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 24px;
+    margin: 28px 0;
+    border-radius: 2px;
+  }
+  .quote-box .label {
+    margin-bottom: 14px;
+    display: block;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .quote-box p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--paper);
+  }
+
+  .checklist {
+    margin: 28px 0;
+    padding: 0;
+    list-style: none;
+  }
+  .checklist li {
+    position: relative;
+    padding: 14px 0 14px 38px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .checklist li:last-child { border-bottom: 1px solid var(--line); }
+  .checklist li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 14px;
+    color: var(--accent-deep);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .checklist li strong { color: var(--ink); font-weight: 600; }
+
+  .chip-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 16px 0 8px;
+  }
+
+  /* ── PRINCIPLES (three closing pillars) ─────────── */
+  .principles {
+    padding: 120px 32px;
+    border-top: 1px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .principles-inner { max-width: 1400px; margin: 0 auto; }
+  .principles-header {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 40px;
+    margin-bottom: 60px;
+  }
+  .principles-header h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .principles-header h2 em { font-style: italic; color: var(--accent-deep); }
+  .principles .pillars { border-top: none; padding-top: 0; }
+
+  /* ── FOOTER ─────────────────────────────────────── */
+  footer {
+    padding: 80px 32px 40px;
+    border-top: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  footer .big {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    max-width: 800px;
+    color: var(--ink);
+  }
+  footer .big em { font-style: italic; color: var(--accent-deep); }
+  footer .big .hl-accent {
+    background: linear-gradient(180deg, transparent 60%, var(--accent) 60%);
+    color: var(--ink);
+    padding: 0 4px;
+  }
+  footer .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-quiet);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ── LOW-HANGING FRUIT SECTION ──────────────────── */
+  .starters {
+    padding: 120px 32px;
+    background: var(--paper-2);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .starters-inner { max-width: 1400px; margin: 0 auto; }
+  .starters-header {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 40px;
+    margin-bottom: 60px;
+  }
+  .starters-header h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .starters-header h2 em { font-style: italic; color: var(--accent-deep); }
+  .header-sub {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(17px, 1.8vw, 22px);
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-top: 22px;
+    line-height: 1.4;
+    max-width: 760px;
+    letter-spacing: -0.005em;
+  }
+  .starters-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    align-items: start;
+  }
+  .starter {
+    padding: 36px 28px 36px 0;
+    border-right: 1px solid var(--line);
+  }
+  .starter:nth-child(3n) { border-right: none; }
+  .starter:nth-child(n+4) { border-top: 1px solid var(--line); padding-top: 36px; }
+  .starter:not(:nth-child(3n)) { padding-right: 36px; }
+  .starter:not(:first-child):not(:nth-child(3n+1)) { padding-left: 36px; }
+  .starter h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .starter h3 em { font-style: italic; color: var(--accent-deep); }
+  .starter > p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .starter .for-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    font-weight: 700;
+    display: block;
+  }
+  .prompt-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+  }
+  .prompt-toggle:hover { background: var(--ink); color: var(--paper); }
+  .prompt-toggle svg { width: 12px; height: 12px; transition: transform 0.3s; }
+  .prompt-toggle svg path { stroke: currentColor; }
+  .starter.open .prompt-toggle svg { transform: rotate(45deg); }
+  .starter .prompt-block {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, margin-top 0.5s ease;
+    margin-top: 0;
+  }
+  .starter.open .prompt-block {
+    max-height: 3000px;
+    margin-top: 22px;
+  }
+  .prompt-block-inner {
+    background: var(--ink);
+    padding: 28px;
+    border-radius: 2px;
+    position: relative;
+  }
+  .prompt-block-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0,229,255,0.25);
+    font-weight: 700;
+    padding-right: 80px;
+  }
+  .prompt-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--paper);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+  }
+  .prompt-text .placeholder {
+    color: var(--accent);
+    background: rgba(0,229,255,0.12);
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .prompt-copy {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    padding: 6px 10px;
+    background: transparent;
+    border: 1px solid rgba(250,248,243,0.3);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  .prompt-copy:hover { border-color: var(--accent); color: var(--accent); }
+  .prompt-copy.copied { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+
+  /* ── MID-FLIGHT MOVES (inside starter prompt block) ── */
+  .follow-ups {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(250,248,243,0.15);
+  }
+  .follow-ups-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .follow-ups-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .follow-up-card {
+    position: relative;
+    padding: 16px;
+    border: 1px solid rgba(250,248,243,0.15);
+    border-radius: 2px;
+  }
+  .follow-up-tag {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 700;
+    padding-right: 56px;
+  }
+  .follow-up-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--paper);
+    margin: 0;
+    white-space: pre-wrap;
+  }
+  .follow-up-card .prompt-copy {
+    top: 10px;
+    right: 10px;
+    font-size: 8px;
+    padding: 4px 8px;
+  }
+
+  /* ── FOOTER CTA ─────────────────────────────────── */
+  .cta-line {
+    max-width: 1400px;
+    margin: 60px auto 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(11px, 1.1vw, 14px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 700;
+    line-height: 1.7;
+  }
+  .cta-line .arrow { color: var(--accent-deep); margin: 0 10px; }
+
+  @media (max-width: 900px) {
+    .starters-grid { grid-template-columns: 1fr; }
+    .starter { border-right: none; border-bottom: 1px solid var(--line); padding: 28px 0 !important; }
+    .starter:last-child { border-bottom: none; }
+    .follow-ups-grid { grid-template-columns: 1fr; }
+  }
+
+  /* scroll-margin for sticky meta-bar offset on navigation */
+  .starter, .step, .custom-idea, .where { scroll-margin-top: 70px; }
+
+  /* ── HERO DROPDOWN "I WANT TO..." ──────────────── */
+  .iwant-launcher {
+    position: relative;
+    z-index: 40;
+  }
+  .iwant-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .iwant-trigger:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+  .iwant-trigger svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--accent);
+    transition: transform 0.3s, stroke 0.2s;
+  }
+  .iwant-trigger:hover svg { stroke: var(--paper); }
+  .iwant-launcher.open .iwant-trigger svg { transform: rotate(180deg); }
+
+  .iwant-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 340px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.14);
+    padding: 8px;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .iwant-launcher.open .iwant-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .iwant-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 11px 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    line-height: 1.4;
+  }
+  .iwant-option:hover { background: var(--paper-2); color: var(--accent-deep); }
+  .iwant-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 6px 6px;
+  }
+  .iwant-custom { font-weight: 600; color: var(--accent-deep); }
+
+  /* ── WHERE YOU CAN BUILD ─────────────────────── */
+  .where {
+    padding: 100px 32px;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .where-inner { max-width: 1400px; margin: 0 auto; }
+  .where-header {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 36px;
+    margin-bottom: 48px;
+  }
+  .where-header h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5.4vw, 64px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .where-header h2 em { font-style: italic; color: var(--accent-deep); }
+  .where-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    align-items: start;
+  }
+  .where-tool {
+    padding: 0 24px 0 0;
+    border-right: 1px solid var(--line);
+  }
+  .where-tool:last-child { border-right: none; padding-right: 0; }
+  .where-tool:not(:first-child) { padding-left: 24px; }
+  .where-tool .chip { margin-bottom: 16px; }
+  .where-tool p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* ── CUSTOM IDEA SECTION ─────────────────────── */
+  .custom-idea {
+    padding: 100px 32px;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--ink);
+  }
+  .custom-idea-inner { max-width: 1100px; margin: 0 auto; }
+  .custom-idea-header {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 36px;
+    margin-bottom: 36px;
+  }
+  .custom-idea-header h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5.4vw, 64px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .custom-idea-header h2 em { font-style: italic; color: var(--accent-deep); }
+  .custom-idea-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  #custom-idea-input {
+    width: 100%;
+    padding: 20px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #custom-idea-input:focus { border-color: var(--accent-deep); }
+  #custom-idea-input::placeholder { color: var(--ink-quiet); }
+  .generate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .generate-btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+  .generate-btn svg { width: 14px; height: 14px; stroke: var(--accent); transition: stroke 0.2s; }
+  .generate-btn:hover svg { stroke: var(--paper); }
+  .generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .generate-btn.loading .generate-btn-text::after {
+    content: " …";
+    animation: dots 1.2s infinite;
+  }
+  @keyframes dots {
+    0%, 20%   { content: " ."; }
+    40%       { content: " .."; }
+    60%, 100% { content: " ..."; }
+  }
+  .custom-idea-result { margin-top: 16px; }
+
+  /* ── NOTES SIDEBAR ───────────────────────────── */
+  .notes-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 80;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    transition: background 0.2s;
+  }
+  .notes-toggle:hover { background: var(--accent-deep); }
+  .notes-toggle.open { background: var(--accent-deep); }
+  .notes-toggle svg { width: 14px; height: 14px; stroke: var(--accent); transition: stroke 0.2s; }
+  .notes-toggle:hover svg { stroke: var(--paper); }
+  .notes-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 380px;
+    max-width: 90vw;
+    z-index: 70;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    box-shadow: -12px 0 32px rgba(0,0,0,0.2);
+  }
+  .notes-panel.open { transform: translateX(0); }
+  .notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(250,248,243,0.15);
+  }
+  .notes-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .notes-close {
+    background: transparent;
+    border: 1px solid rgba(250,248,243,0.2);
+    color: var(--paper);
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .notes-close:hover { border-color: var(--accent); color: var(--accent); }
+  #notes-textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--paper);
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    padding: 12px 0;
+    resize: none;
+    outline: none;
+  }
+  #notes-textarea::placeholder { color: rgba(250,248,243,0.4); }
+  .notes-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250,248,243,0.4);
+    margin-top: 12px;
+  }
+
+@media (max-width: 900px) {
+    .where-grid { grid-template-columns: 1fr 1fr; }
+    .where-tool {
+      padding: 0 16px 0 0 !important;
+      border-right: 1px solid var(--line);
+    }
+    .where-tool:nth-child(2n) { border-right: none; padding-right: 0 !important; }
+    .where-tool:nth-child(n+3) {
+      border-top: 1px solid var(--line);
+      padding-top: 24px !important;
+      margin-top: 24px;
+    }
+    .where-tool:nth-child(2n+1):not(:first-child) { padding-left: 0 !important; }
+    .where-tool:not(:first-child):not(:nth-child(2n+1)) { padding-left: 16px !important; }
+  }
+
+  @media (max-width: 720px) {
+    .iwant-menu { right: auto; left: 0; min-width: 280px; }
+    .where { padding: 60px 20px; }
+    .custom-idea { padding: 60px 20px; }
+    .notes-toggle { bottom: 16px; right: 16px; }
+    .notes-toggle span { display: none; }
+    .where-grid { grid-template-columns: 1fr; }
+    .where-tool { padding: 24px 0 !important; border-right: none !important; border-bottom: 1px solid var(--line); margin: 0 !important; }
+    .where-tool:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 720px) {
+    .step-head {
+      grid-template-columns: 60px 1fr 40px;
+      gap: 16px;
+      padding: 28px 20px;
+    }
+    .step-head .chip { display: none; }
+    .step-body-inner {
+      grid-template-columns: 1fr;
+      padding: 0 20px 40px;
+    }
+    .steps-header { flex-direction: column; align-items: flex-start; }
+    .hero { padding: 100px 20px 60px; }
+    .intro { padding: 60px 20px; }
+    .starters { padding: 60px 20px; }
+    .principles { padding: 60px 20px; }
+    .meta-bar { padding: 12px 20px; font-size: 9px; }
+    .meta-bar span:nth-child(2) { display: none; }
+    .cta-line { line-height: 2; }
+    .cta-line .arrow { margin: 0 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="meta-bar">
+  <span><span class="pulse"></span>FIELD GUIDE / V.01</span>
+  <span>A WORKING PROCESS — NOT A FORMULA</span>
+  <span>EST. MAY 2026</span>
+</div>
+
+<!-- ─────────────────────── HERO ─────────────────────── -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-chips">
+      <span class="chip solid-accent">For people who make things</span>
+      <span class="chip">No code required</span>
+    </div>
+    <div class="iwant-launcher">
+      <button class="iwant-trigger" aria-haspopup="true" aria-expanded="false">
+        <span>I want to...</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="iwant-menu" role="menu">
+        <button class="iwant-option" data-target="starter" data-index="0">Build an interactive brief</button>
+        <button class="iwant-option" data-target="starter" data-index="1">Explore a trend</button>
+        <button class="iwant-option" data-target="starter" data-index="2">Bridge strategy &rarr; media</button>
+        <button class="iwant-option" data-target="starter" data-index="3">Showcase an insight</button>
+        <button class="iwant-option" data-target="starter" data-index="4">Wrap a campaign with learnings</button>
+        <button class="iwant-option" data-target="starter" data-index="5">Find category whitespace</button>
+        <div class="iwant-divider"></div>
+        <button class="iwant-option iwant-custom" data-target="custom">Build something custom &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-headline">
+    <h1 class="hero-title">
+      How to <em>build</em><br>
+      something <span class="underline-accent">today</span><br>
+      with AI — in seven<br>
+      easy steps.
+    </h1>
+    <p class="hero-subline">Microsites, briefs, dashboards, interactive insights — <em>single-page HTML builds</em> you can share with a link, an email, or as an attachment.</p>
+  </div>
+
+</section>
+
+<!-- ─────────────────────── INTRO ─────────────────────── -->
+<section class="intro">
+  <span class="label">A note before we start</span>
+  <div class="pillars">
+    <div class="pillar">
+      <span class="chip">01 / The mindset</span>
+      <h3>Think, <em>don't code</em>.</h3>
+      <p>This is a guide to <em>how to think</em> — what you want, where it should live, and how to talk to a model so it can help you make it real.</p>
+    </div>
+    <div class="pillar">
+      <span class="chip">02 / The unlock</span>
+      <h3>Show, <em>don't pitch</em>.</h3>
+      <p>The difference between <em>"here's our POV"</em> and "here's a live version — click it, share it, send it before Monday."</p>
+    </div>
+    <div class="pillar">
+      <span class="chip">03 / The proof</span>
+      <h3>Ship it <em>tomorrow</em>.</h3>
+      <p>Built from real work. Voice notes on a walk that ended up <em>live on the internet</em> by end of day. Pitches that became microsites.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── WHERE YOU CAN BUILD ─────────────────────── -->
+<section class="where">
+  <div class="where-inner">
+    <div class="where-header">
+      <h2>Where you can <em>build</em>.</h2>
+      <p class="header-sub">The coding spaces where this kind of work happens.</p>
+    </div>
+    <div class="where-grid">
+      <div class="where-tool">
+        <span class="chip solid-accent">WPP Open</span>
+        <p>Our internal AI platform. Brand-safe data handling, integrations, Companions live here. Where the work eventually goes.</p>
+      </div>
+      <div class="where-tool">
+        <span class="chip">AI Studio</span>
+        <p>Google's playground for Gemini. Great for quick experiments, image generation, and code prototypes with Flash 2.5 or Pro.</p>
+      </div>
+      <div class="where-tool">
+        <span class="chip">Claude Code</span>
+        <p>Anthropic's coding agent. Lives in your terminal, edits files autonomously, builds full projects from a single brief.</p>
+      </div>
+      <div class="where-tool">
+        <span class="chip">OpenAI Codex</span>
+        <p>OpenAI's coding agent. Terminal and web versions — similar capability to Claude Code, on GPT models.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── LOW-HANGING FRUIT ─────────────────────── -->
+<section class="starters">
+  <div class="starters-inner">
+    <div class="starters-header">
+      <h2>Low-hanging <em>fruit</em>.</h2>
+      <p class="header-sub">Simple use cases to supercharge your strategies.</p>
+    </div>
+    <div class="starters-grid">
+
+      <!-- 1 -->
+      <div class="starter">
+        <h3>The Interactive Brief</h3>
+        <p>Replace the brief deck with a live link. Audience, insight, KPIs — clickable, scrollable, and the creative agency partner actually reads it because it's not 40 slides.</p>
+        <span class="for-line">For / Briefing the creative agency</span>
+        <button class="prompt-toggle" aria-label="Toggle starter prompt">
+          <span class="toggle-text">Show starter prompt</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="prompt-block">
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Drop into your coding agent</span>
+            <pre class="prompt-text">I want to build an interactive brief microsite to replace the brief deck we'd normally send our creative agency partner.
+
+Context:
+- Brand: <span class="placeholder">[BRAND NAME]</span>
+- Audience: <span class="placeholder">[PRIMARY AUDIENCE]</span>
+- Strategic POV: <span class="placeholder">[THE ONE-LINE INSIGHT THAT FRAMES THIS BRIEF]</span>
+- Business objective: <span class="placeholder">[WHAT THE BRAND IS TRYING TO DO]</span>
+- KPIs: <span class="placeholder">[HOW WE'LL MEASURE SUCCESS]</span>
+
+Build a single self-contained HTML page that flows through:
+1. Hero with the strategic POV in big editorial Fraunces type
+2. Who we're talking to — audience profile with behavior, mindset, what they're not (paragraph + short list)
+3. What we're saying — message hierarchy: core idea, supporting beliefs, what we'd never say
+4. Where we'll meet them — channel implications, moments, format cues the creative team needs to know
+5. How we'll know it worked — KPIs with target ranges and why they matter
+
+Design direction: editorial long-read, not SaaS landing page. Cream paper, ink type, neon cyan accents used sparingly. Fraunces serif for display, Inter Tight for body. No card patterns, no rainbow gradients.
+
+Before you write any code, describe the design direction in plain language and ask me three sharpening questions a senior planner would ask.</pre>
+            <button class="prompt-copy">Copy</button>
+            <div class="follow-ups">
+              <span class="follow-ups-label">→ Mid-flight moves</span>
+              <div class="follow-ups-grid">
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">When it looks generic</span>
+                  <pre class="follow-up-text">Make this feel less like a template and more like something a human designed. Break the grid. Reduce the number of ideas — fewer, executed harder. Cut anything that isn't load-bearing.</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">The honest read</span>
+                  <pre class="follow-up-text">You are a senior strategist who hates being wrong. Look at this draft and tell me what's weak. Don't soften. What would a smart skeptic point to first, and what's the strongest version of their argument?</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="starter">
+        <h3>The Trend Exploration</h3>
+        <p>Drop in a cultural signal you're tracking. Get back the physics — who's driving it, why now, and three brand-actionable angles that won't read as cringe to the audience already inside it.</p>
+        <span class="for-line">For / Every cultural ping from the client</span>
+        <button class="prompt-toggle" aria-label="Toggle starter prompt">
+          <span class="toggle-text">Show starter prompt</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="prompt-block">
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Drop into your coding agent</span>
+            <pre class="prompt-text">I want to build a deep-dive trend exploration page I can share with my team and our creative agency partners.
+
+Context:
+- Trend: <span class="placeholder">[TREND NAME — e.g., "morning shed", "recession-core", "the post-club era"]</span>
+- Brand or category context: <span class="placeholder">[BRAND OR CATEGORY THIS IS RELEVANT TO]</span>
+- What I need from this: <span class="placeholder">[E.G., "is this real enough to plan against?", "how do we land here without being cringe?"]</span>
+
+Build a single self-contained HTML page with:
+1. A clear one-sentence definition of the trend — what it is, what it specifically isn't
+2. Three audience pockets driving it — how to recognize them, what platforms they live on
+3. The cultural physics — what's making this resonate right now (economic, generational, platform-level forces). Cite specific cultural references.
+4. Three brand-actionable angles a media strategist could take to a creative partner, each with: the consumer truth underneath it, the brand's permission to play, a sample channel/format expression
+5. Three anti-patterns — how brands get this trend wrong and end up looking late or pandering
+
+Use web search to pull current real-world examples. Cite sources.
+
+Design direction: editorial trend report — Highsnobiety / The Face deep dive, not a Statista PDF. Generous whitespace, big serif pull-quotes for the most quotable insights, neon cyan accents for callouts.
+
+Before you build, ask me which audience or brand context I want this trend mapped against.</pre>
+            <button class="prompt-copy">Copy</button>
+            <div class="follow-ups">
+              <span class="follow-ups-label">→ Mid-flight moves</span>
+              <div class="follow-ups-grid">
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">When it looks generic</span>
+                  <pre class="follow-up-text">Make this feel less like a template and more like something a human designed. Break the grid. Reduce the number of ideas — fewer, executed harder. Cut anything that isn't load-bearing.</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">The honest read</span>
+                  <pre class="follow-up-text">You are a senior strategist who hates being wrong. Look at this draft and tell me what's weak. Don't soften. What would a smart skeptic point to first, and what's the strongest version of their argument?</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="starter">
+        <h3>The <em>"But how does this strategy inform media?"</em></h3>
+        <p>The translation layer between the strategy doc and the media plan. Paste the POV — get back channels, moments, and the format cues the creative partner forgets to ask about.</p>
+        <span class="for-line">For / Bridging strategy → media</span>
+        <button class="prompt-toggle" aria-label="Toggle starter prompt">
+          <span class="toggle-text">Show starter prompt</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="prompt-block">
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Drop into your coding agent</span>
+            <pre class="prompt-text">I want to build a translation document that bridges from strategic POV into media-actionable thinking. The creative agency owns the strategy — I need to show how that strategy actually informs media decisions.
+
+Context:
+- Brand: <span class="placeholder">[BRAND NAME]</span>
+- Strategic POV: <span class="placeholder">[PASTE THE STRATEGY / POSITIONING / INSIGHT]</span>
+- Budget context: <span class="placeholder">[SCALE — e.g., "national integrated", "always-on social", "$200k paid pilot"]</span>
+- Timing window: <span class="placeholder">[WHEN THIS NEEDS TO RUN]</span>
+
+Build a single self-contained HTML page that turns the strategy into a media-actionable map:
+1. Hero: the strategic POV restated, then the one-sentence answer to "so what does this mean for media?"
+2. The audience moment — where they are, what state of mind, what they're doing right before / during / after we want to reach them
+3. Channel implications — rank-ordered, each with the reason it earns the right (not "they're on TikTok" — what about the strategy points us there?)
+4. Three to five format cues for the creative partner — things like "this needs sound-on", "this needs a sequential narrative across exposures", "this can't work as a single hero asset"
+5. Cultural calendar moments to lean into (next 90 days), with rationale
+6. KPI translation — success in numbers that match the strategy, not generic reach/views
+
+Design direction: confident planning document. Editorial layout, Fraunces serif for headers, Inter Tight body. Neon cyan for the "so what" moments. Looks like something a senior planner hands to a CSO without explanation.
+
+Before you build, ask me what the creative agency keeps getting wrong about this brand's media approach.</pre>
+            <button class="prompt-copy">Copy</button>
+            <div class="follow-ups">
+              <span class="follow-ups-label">→ Mid-flight moves</span>
+              <div class="follow-ups-grid">
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">When it looks generic</span>
+                  <pre class="follow-up-text">Make this feel less like a template and more like something a human designed. Break the grid. Reduce the number of ideas — fewer, executed harder. Cut anything that isn't load-bearing.</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">The honest read</span>
+                  <pre class="follow-up-text">You are a senior strategist who hates being wrong. Look at this draft and tell me what's weak. Don't soften. What would a smart skeptic point to first, and what's the strongest version of their argument?</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="starter">
+        <h3>The Insight Microsite</h3>
+        <p>One stat, turned into the editorial moment it actually deserves. Massive type, framed for the room — the kind of finding that survives the meeting and gets sent around after.</p>
+        <span class="for-line">For / The finding that deserves better</span>
+        <button class="prompt-toggle" aria-label="Toggle starter prompt">
+          <span class="toggle-text">Show starter prompt</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="prompt-block">
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Drop into your coding agent</span>
+            <pre class="prompt-text">I want to build a single-page editorial microsite for one research finding. This is the kind of insight that usually dies on slide 47 of a deck — I want to give it the editorial moment it deserves.
+
+Context:
+- The finding: <span class="placeholder">[PASTE THE INSIGHT / STAT — e.g., "64% of Gen Z women have used AI for skincare advice in the last 30 days, up from 18% a year ago"]</span>
+- Source: <span class="placeholder">[WHERE THIS CAME FROM — research panel, MRI, internal study, etc.]</span>
+- Brand or category context: <span class="placeholder">[WHO'S READING THIS / WHAT BRAND CONTEXT IT'S BEING READ THROUGH]</span>
+
+Build a single self-contained HTML page treating this finding the way a magazine treats a hero pull-quote:
+1. Hero: the finding itself in massive editorial Fraunces type, treated for impact — line breaks for cadence, italic emphasis on the punch word
+2. Context (one short paragraph): why this matters, what's driving it
+3. Three implications for brand strategy — the "so what" for a senior planner
+4. Our opinionated POV — one paragraph of confident point-of-view on what this means going forward. Take a stand.
+5. Source and methodology in small mono type at the bottom
+
+Design direction: editorial print, not stat-dashboard. Wallpaper magazine or The Drift energy. Cream paper, ink type, massive serif display, neon cyan accents only where they earn it. NO charts. NO icons. NO cards. Text and typography only.
+
+Before you build, ask me what brand or category I want this insight read through — the implications change based on who's reading it.</pre>
+            <button class="prompt-copy">Copy</button>
+            <div class="follow-ups">
+              <span class="follow-ups-label">→ Mid-flight moves</span>
+              <div class="follow-ups-grid">
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">When it looks generic</span>
+                  <pre class="follow-up-text">Make this feel less like a template and more like something a human designed. Break the grid. Reduce the number of ideas — fewer, executed harder. Cut anything that isn't load-bearing.</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">The honest read</span>
+                  <pre class="follow-up-text">You are a senior strategist who hates being wrong. Look at this draft and tell me what's weak. Don't soften. What would a smart skeptic point to first, and what's the strongest version of their argument?</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="starter">
+        <h3>The Campaign Learnings Dash</h3>
+        <p>Paste in results from a campaign that just wrapped. Get back the retro that gets read because it's a sharable link, not slide 47 — what worked, what didn't, what we're testing next.</p>
+        <span class="for-line">For / The wash-up that actually gets read</span>
+        <button class="prompt-toggle" aria-label="Toggle starter prompt">
+          <span class="toggle-text">Show starter prompt</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="prompt-block">
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Drop into your coding agent</span>
+            <pre class="prompt-text">I want to build a campaign learnings page — the post-campaign retro that actually gets read because it's a sharable link, not a 40-slide deck nobody opens.
+
+Campaign details:
+- Brand: <span class="placeholder">[BRAND NAME]</span>
+- Campaign name: <span class="placeholder">[CAMPAIGN NAME]</span>
+- Objective: <span class="placeholder">[WHAT WE SET OUT TO DO]</span>
+- Headline result: <span class="placeholder">[THE MAIN NUMBER]</span>
+- Other key metrics: <span class="placeholder">[PASTE OR LIST OTHER PERFORMANCE DATA]</span>
+- Channels run: <span class="placeholder">[WHERE THE CAMPAIGN LIVED]</span>
+
+Build a single self-contained HTML page structured as:
+1. Hero: one-sentence headline of the most important thing we learned
+2. The numbers — top 3-5 metrics as bold editorial pull-numbers (not charts), each with one sentence of context
+3. Three things that worked — with evidence and what we'd take forward into the next plan
+4. Two things that didn't — with honest diagnosis (root cause, not blame), and what we'd change
+5. The "huh, that's interesting" moment — the unexpected finding worth chasing further
+6. Three hypotheses to test next, with how we'd structure each test (audience, channel, success criteria)
+
+Design direction: editorial, not corporate. Short paragraphs. Frank language — "this didn't work because" not "this underperformed expectations." Sized for a 5-minute read, not a 30-minute meeting.
+
+Before you build, ask me what I'm tempted to soften in this retro, and push me to be more honest about it.</pre>
+            <button class="prompt-copy">Copy</button>
+            <div class="follow-ups">
+              <span class="follow-ups-label">→ Mid-flight moves</span>
+              <div class="follow-ups-grid">
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">When it looks generic</span>
+                  <pre class="follow-up-text">Make this feel less like a template and more like something a human designed. Break the grid. Reduce the number of ideas — fewer, executed harder. Cut anything that isn't load-bearing.</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">The honest read</span>
+                  <pre class="follow-up-text">You are a senior strategist who hates being wrong. Look at this draft and tell me what's weak. Don't soften. What would a smart skeptic point to first, and what's the strongest version of their argument?</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="starter">
+        <h3>The Whitespace Explorer</h3>
+        <p>Map the category. See what every brand is already saying, who's getting served and who isn't, and where there's still room to plant a flag that costs less than fighting for the obvious.</p>
+        <span class="for-line">For / Pitches that need a fresh angle</span>
+        <button class="prompt-toggle" aria-label="Toggle starter prompt">
+          <span class="toggle-text">Show starter prompt</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="prompt-block">
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Drop into your coding agent</span>
+            <pre class="prompt-text">I want to build a category whitespace map — a strategic doc that shows what's already claimed and where there's still room to plant a flag.
+
+Context:
+- Brand: <span class="placeholder">[BRAND NAME]</span>
+- Category: <span class="placeholder">[CATEGORY — e.g., "premium tequila", "home insurance", "energy drinks for women"]</span>
+- Main competitors: <span class="placeholder">[LIST 3-5]</span>
+- The question I'm answering: <span class="placeholder">[E.G., "where should we land for the relaunch?", "what's our reason to win against [COMPETITOR]?"]</span>
+
+Use web search to ground this in real positioning — pull actual recent campaigns, brand language, and ad creative where useful.
+
+Build a single self-contained HTML page that includes:
+1. Hero: the category landscape in one sentence — what's true about who owns what
+2. The claimed territory — each main competitor's current positioning in a one-sentence verdict (what they're saying, what they own, what they're missing)
+3. The audience map — who's getting served, who's underserved, where the cultural tension lives
+4. The cultural moments and tensions the category is ignoring or fumbling
+5. Three whitespace plays, each with: the territory we'd own, the audience pocket it speaks to, the cultural underpinning that makes it true now, a "what this would sound like" one-liner, and a defensibility test (could a competitor copy this easily?)
+6. The honest verdict — which play is the best bet, and what would have to be true for it to work
+
+Design direction: confident competitive map, not a McKinsey 2x2. Editorial layout, opinionated language. Fraunces serif for the plays, Inter Tight for analysis. Neon cyan accents on the whitespace itself.
+
+Before you build, ask me which audience or product line within the brand I want to focus the map on, and what the budget reality is — are we trying to win share, defend share, or enter a new occasion?</pre>
+            <button class="prompt-copy">Copy</button>
+            <div class="follow-ups">
+              <span class="follow-ups-label">→ Mid-flight moves</span>
+              <div class="follow-ups-grid">
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">When it looks generic</span>
+                  <pre class="follow-up-text">Make this feel less like a template and more like something a human designed. Break the grid. Reduce the number of ideas — fewer, executed harder. Cut anything that isn't load-bearing.</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+                <div class="follow-up-card">
+                  <span class="follow-up-tag">The honest read</span>
+                  <pre class="follow-up-text">You are a senior strategist who hates being wrong. Look at this draft and tell me what's weak. Don't soften. What would a smart skeptic point to first, and what's the strongest version of their argument?</pre>
+                  <button class="prompt-copy">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── CUSTOM IDEA ─────────────────────── -->
+<section class="custom-idea" id="custom-idea">
+  <div class="custom-idea-inner">
+    <div class="custom-idea-header">
+      <h2>Got your own <em>idea</em>?</h2>
+      <p class="header-sub">Describe what you want to build. We'll generate a clean starter prompt to drop into your coding agent.</p>
+    </div>
+    <div class="custom-idea-form">
+      <textarea id="custom-idea-input" placeholder="I want to build a tool that... (e.g., turns a competitive audit into a one-page strategic POV for the client)" rows="4"></textarea>
+      <button id="custom-idea-generate" class="generate-btn">
+        <span class="generate-btn-text">Generate starter prompt</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div id="custom-idea-result" class="custom-idea-result" hidden></div>
+  </div>
+</section>
+
+<!-- ─────────────────────── STEPS ─────────────────────── -->
+<section class="steps-section">
+  <div class="steps-header">
+    <h2>The <em>seven</em> moves.</h2>
+    <p class="header-sub">Here's how the build actually happens.</p>
+  </div>
+
+  <!-- STEP 1 -->
+  <article class="step" data-step="1">
+    <div class="step-head">
+      <div class="step-num">STEP 01</div>
+      <h3 class="step-title">Name the problem <em>before</em> you name the solution.</h3>
+      <span class="chip solid-ink">Define</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">Before you open Claude — write down, in plain language, what you're actually trying to do. "I want a microsite" isn't a problem; "my team keeps losing track of approved ideas across three docs" is.</p>
+          <ul class="checklist">
+            <li><strong>Who is this for, and what moment do they encounter it?</strong> A pitch? A team Monday morning? A friend you're texting a link to?</li>
+            <li><strong>What does success look like in one sentence?</strong> If you can't write that sentence, you're not ready to brief anything.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">Rule of thumb</span>
+            <p>If your idea fits in a tweet, it's ready to build. If it takes a paragraph to explain the setup before the idea lands, keep editing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 2 -->
+  <article class="step" data-step="2">
+    <div class="step-head">
+      <div class="step-num">STEP 02</div>
+      <h3 class="step-title">Brain-dump in a <em>voice note</em>. Hand it to the model.</h3>
+      <span class="chip solid-ink">Dump</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">The fastest way from idea to brief is to talk, not type. Open the Claude app, hit the mic, and ramble for two to four minutes — audience, what exists, what inspires, what you're worried about. Don't edit yourself. Then ask the model to do three things:</p>
+          <ul class="checklist">
+            <li><strong>Play back what you said in clean structure.</strong> Audience, problem, success state, tone, constraints.</li>
+            <li><strong>Ask you the questions a good strategist would ask</strong> before drafting anything.</li>
+            <li><strong>Only after you've answered, draft a prompt</strong> you can use to start the real build in a fresh chat.</li>
+          </ul>
+          <div class="quote-box">
+            <span class="label">→ TRY THIS OPENER</span>
+            <p>I'm going to ramble for a few minutes. When I'm done, play back what I said in structured form, then ask me the questions a senior strategist would ask before drafting anything. Don't make anything yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 3 -->
+  <article class="step" data-step="3">
+    <div class="step-head">
+      <div class="step-num">STEP 03</div>
+      <h3 class="step-title">Show, don't <em>tell</em>. Feed it your taste.</h3>
+      <span class="chip solid-ink">References</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">References are where most AI builds win or lose their identity. The more particular your taste cues, the more the output will look like you and not a template — without them, models default to an aesthetic average (card-heavy, slightly purple, forgettable).</p>
+          <div class="chip-row">
+            <span class="chip">Screenshots</span>
+            <span class="chip">Named aesthetic</span>
+            <span class="chip">Anti-references</span>
+            <span class="chip">Vibe word</span>
+          </div>
+          <ul class="checklist">
+            <li><strong>Screenshots of sites you love.</strong> Three to six is plenty. Upload them directly.</li>
+            <li><strong>Name the aesthetic out loud.</strong> "Editorial, like a Bloomberg long-read." "Brutalist with magazine energy." Specificity unlocks better instincts.</li>
+            <li><strong>Anti-references.</strong> Tell it what to avoid by name. "Nothing that looks like a SaaS landing page from 2019."</li>
+            <li><strong>Pick a vibe word and hold it.</strong> Confident. Quiet. Loud. Sharp. Refer back to it when something feels off.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">A trick that works</span>
+            <p>Ask Claude to articulate the design direction back to you <em>before</em> it writes a single line of code. If those sentences don't make you nod, fix them now.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 4 -->
+  <article class="step" data-step="4">
+    <div class="step-head">
+      <div class="step-num">STEP 04</div>
+      <h3 class="step-title">Bring the <em>source material</em>. All of it.</h3>
+      <span class="chip solid-ink">Sources</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">What separates a generic build from a great one isn't a clever brief — it's the material you bring alongside it. The richer the inputs, the sharper the output.</p>
+          <div class="chip-row">
+            <span class="chip">Decks</span>
+            <span class="chip">Voice memos</span>
+            <span class="chip">Real data</span>
+            <span class="chip">Real copy</span>
+            <span class="chip">Brand voice samples</span>
+            <span class="chip">Web search</span>
+          </div>
+          <ul class="checklist">
+            <li><strong>Decks, briefs, notes, voice memos.</strong> Even the rough version. Especially the rough version.</li>
+            <li><strong>Real data and real copy.</strong> Placeholder data leads to placeholder thinking.</li>
+            <li><strong>Brand voice samples.</strong> "Here are five captions that sound like us. Here are three that don't. Learn the difference."</li>
+            <li><strong>Web search where the data is alive.</strong> Current stats, recent news, public sources. Bake citations in so the work is defensible.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">The context principle</span>
+            <p>You are not bothering it. You are not "giving it too much." Front-load the work. <em>The build will be ten times better for it.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 5 -->
+  <article class="step" data-step="5">
+    <div class="step-head">
+      <div class="step-num">STEP 05</div>
+      <h3 class="step-title">Build the first cut. Then push <em>back</em>.</h3>
+      <span class="chip solid-ink">Iterate</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">Ask for an artifact — a single self-contained HTML page is the right starting point for most ideas. The first version will be a draft; your job now is editor, not briefer.</p>
+          <ul class="checklist">
+            <li><strong>React in plain language.</strong> "This feels too AI-generated." "It's reading as a template." The model can take honest feedback.</li>
+            <li><strong>Ask it to break its own pattern.</strong> "What's a more unique design language we could layer on this?"</li>
+            <li><strong>Edit one thing at a time.</strong> Big "fix everything" requests produce muddled results. Tight, specific asks compound.</li>
+            <li><strong>Save versions.</strong> If you wander somewhere worse, you can always come back.</li>
+          </ul>
+          <div class="quote-box">
+            <span class="label">→ USEFUL PHRASES</span>
+            <p>"Make this feel less like a template and more like something a human designed."<br><br>"Break the grid. I want intentional asymmetry, not symmetry."<br><br>"Cut everything that isn't load-bearing. Fewer ideas, executed harder."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 6 -->
+  <article class="step" data-step="6">
+    <div class="step-head">
+      <div class="step-num">STEP 06</div>
+      <h3 class="step-title">Put it <em>somewhere</em> people can see it.</h3>
+      <span class="chip solid-ink">Host</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">Once you have an HTML file, getting it in front of someone is straightforward. A handful of paths — email, free hosting, internal team links — depending on who needs to see it and whether you'll iterate.</p>
+          <div class="chip-row">
+            <span class="chip">Email</span>
+            <span class="chip solid-accent">Claude public link</span>
+            <span class="chip">Google Sites</span>
+            <span class="chip">GitHub Pages</span>
+            <span class="chip">Vercel</span>
+          </div>
+          <ul class="checklist">
+            <li><strong>Email it.</strong> An HTML file as an attachment opens directly in any browser. Zero setup — fine for one-off sends.</li>
+            <li><strong>Claude artifact link.</strong> Fastest path if you built it as an artifact. Click "Publish" and you get a public URL anyone can open without an account.</li>
+            <li><strong>Google Sites.</strong> Host the HTML inside Google Workspace and share it with anyone in your org. Good for internal team distribution when you want a real URL but not the open internet.</li>
+            <li><strong>GitHub Pages.</strong> Free. Drop your HTML into a repo, turn on Pages, you get a permanent URL like <span class="mono" style="color:var(--ink);font-size:13px;background:var(--paper-3);padding:2px 6px;border-radius:3px">yourname.github.io/project</span>.</li>
+            <li><strong>Vercel.</strong> Drag-and-drop hosting with environment-variable support if you ever need it for API keys.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">One thing to know</span>
+            <p>If your project calls an external AI service at runtime, don't paste an API key directly into a public HTML file — anyone can view source. For a quick share, you almost certainly don't need this. <em>Start static.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 7 -->
+  <article class="step" data-step="7">
+    <div class="step-head">
+      <div class="step-num">STEP 07</div>
+      <h3 class="step-title">Build an <em>Open Companion</em>.</h3>
+      <span class="chip solid-accent">Connect</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">The artifact you built is one moment. The Companion is the persistent version of it — an agent (or small agentic team) inside Open, trained on the same knowledge and ready for anyone on the team to pick up, push further, and feed with their own context.</p>
+          <ul class="checklist">
+            <li><strong>Decide what knowledge feeds it.</strong> The same context you used to build the artifact — brief, deck, research, voice notes. Cleaner inputs make a sharper Companion.</li>
+            <li><strong>One agent or a team?</strong> A single Companion is right for narrow use cases (one brief, one trend). An agentic team is better when the use case has distinct roles — strategist, planner, creative — that each need their own POV.</li>
+            <li><strong>Set what it accepts as new input.</strong> Decide what people can drop in: only proprietary research, or public sources too. Clear rules make the Companion trustworthy.</li>
+            <li><strong>Write its opening prompt.</strong> Frame the Companion the way you'd frame a strategy meeting — what's on the table, what we're solving for, how it can help.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">The compounding move</span>
+            <p>The build is the moment. The Companion is the <em>system</em> — same knowledge, persistent, queryable, growing every time someone touches it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ─────────────────────── PRINCIPLES (three pillars) ─────────────────────── -->
+<section class="principles">
+  <div class="principles-inner">
+    <div class="principles-header">
+      <h2>Three things to <em>remember</em>.</h2>
+      <p class="header-sub">Hold these in your head — the rest follows.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="chip">01 / The collaborator</span>
+        <h3>Not a peer. <em>A master</em>.</h3>
+        <p>Closer to the best creative director and the best full-stack developer you've ever worked with — same person, infinite patience, zero ego, craft higher than most people you'd actually hire. Brief it that way: context, stakes, references, what good looks like, what to avoid. If a brief would confuse the best CD you know, it'll confuse this.</p>
+      </div>
+      <div class="pillar">
+        <span class="chip">02 / The detail</span>
+        <h3>Specificity <em>beats cleverness</em>.</h3>
+        <p>"Make it pop" produces noise. "Increase the headline to 96px, use Fraunces italic on the verbs, reduce the body to a single column" produces a result. The model can't read your mind — it can only read what you actually wrote.</p>
+      </div>
+      <div class="pillar">
+        <span class="chip">03 / The motive</span>
+        <h3>Build things <em>you'd use</em>.</h3>
+        <p>The best practice projects are the ones you'd actually open on a Tuesday morning. Solve a problem you have. The motivation compounds — the one that solves something real gets opened, iterated, sent around. The one that doesn't dies in a folder.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────── FOOTER ─────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="big">
+      The gap between<br>
+      <em>idea</em> and <span class="hl-accent">artifact</span><br>
+      is smaller than it<br>
+      has ever been.
+    </div>
+  </div>
+  <div class="cta-line">
+    Pick one starter <span class="arrow">→</span> Build it this week <span class="arrow">→</span> Send the link to three people
+  </div>
+</footer>
+
+<!-- ─────────────────────── NOTES SIDEBAR ─────────────────────── -->
+<button class="notes-toggle" aria-label="Open notes" aria-expanded="false">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Notes</span>
+</button>
+<aside class="notes-panel" aria-hidden="true">
+  <div class="notes-header">
+    <span class="notes-title">&rarr; Your notes</span>
+    <button class="notes-close" aria-label="Close notes">&times;</button>
+  </div>
+  <textarea id="notes-textarea" placeholder="Anything you want to remember. Ideas. Questions. Prompts you want to come back to."></textarea>
+  <span class="notes-meta">Saved locally to your browser</span>
+</aside>
+
+<script>
+  document.querySelectorAll('.step-head').forEach(head => {
+    head.addEventListener('click', () => {
+      head.parentElement.classList.toggle('open');
+    });
+  });
+
+  document.querySelectorAll('.prompt-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const starter = btn.closest('.starter');
+      starter.classList.toggle('open');
+      const isOpen = starter.classList.contains('open');
+      btn.querySelector('.toggle-text').textContent = isOpen ? 'Hide prompt' : 'Show starter prompt';
+    });
+  });
+
+  function wireCopyButton(btn) {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const textEl = btn.parentElement.querySelector('.prompt-text, .follow-up-text');
+      if (!textEl) return;
+      const text = textEl.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1500);
+      } catch (err) {
+        const range = document.createRange();
+        range.selectNodeContents(textEl);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    });
+  }
+  document.querySelectorAll('.prompt-copy').forEach(wireCopyButton);
+
+  // ── "I want to..." dropdown ───────────────────
+  const iwantLauncher = document.querySelector('.iwant-launcher');
+  if (iwantLauncher) {
+    const trigger = iwantLauncher.querySelector('.iwant-trigger');
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const opening = !iwantLauncher.classList.contains('open');
+      iwantLauncher.classList.toggle('open', opening);
+      trigger.setAttribute('aria-expanded', String(opening));
+    });
+    document.addEventListener('click', (e) => {
+      if (!iwantLauncher.contains(e.target)) {
+        iwantLauncher.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    iwantLauncher.querySelectorAll('.iwant-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const target = option.getAttribute('data-target');
+        iwantLauncher.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        if (target === 'custom') {
+          const customSection = document.getElementById('custom-idea');
+          if (customSection) {
+            customSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setTimeout(() => document.getElementById('custom-idea-input')?.focus(), 700);
+          }
+        } else if (target === 'starter') {
+          const index = parseInt(option.getAttribute('data-index'), 10);
+          const cards = document.querySelectorAll('.starter');
+          const card = cards[index];
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            card.classList.add('open');
+            const toggleText = card.querySelector('.prompt-toggle .toggle-text');
+            if (toggleText) toggleText.textContent = 'Hide prompt';
+          }
+        }
+      });
+    });
+  }
+
+  // ── Custom idea generation (Gemini via Vercel function) ─────
+  const customInput = document.getElementById('custom-idea-input');
+  const customGenerate = document.getElementById('custom-idea-generate');
+  const customResult = document.getElementById('custom-idea-result');
+  if (customGenerate && customInput && customResult) {
+    customGenerate.addEventListener('click', async () => {
+      const idea = customInput.value.trim();
+      if (!idea) { customInput.focus(); return; }
+
+      customGenerate.disabled = true;
+      customGenerate.classList.add('loading');
+      const btnText = customGenerate.querySelector('.generate-btn-text');
+      const originalText = btnText.textContent;
+      btnText.textContent = 'Generating';
+
+      customResult.hidden = false;
+      customResult.innerHTML = `
+        <div class="prompt-block-inner">
+          <span class="prompt-block-label">→ Generating prompt</span>
+          <pre class="prompt-text" style="opacity:0.7">Cooking up your starter prompt…</pre>
+        </div>
+      `;
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idea })
+        });
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error || `Request failed (${response.status})`);
+        }
+        const data = await response.json();
+        const prompt = data.prompt || '';
+        const safe = prompt
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+        const highlighted = safe.replace(/\[([^\]]+)\]/g, '<span class="placeholder">[$1]</span>');
+        customResult.innerHTML = `
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Drop into your coding agent</span>
+            <pre class="prompt-text">${highlighted}</pre>
+            <button class="prompt-copy">Copy</button>
+          </div>
+        `;
+        const copyBtn = customResult.querySelector('.prompt-copy');
+        if (copyBtn) wireCopyButton(copyBtn);
+      } catch (err) {
+        customResult.innerHTML = `
+          <div class="prompt-block-inner">
+            <span class="prompt-block-label">→ Something went wrong</span>
+            <pre class="prompt-text">${(err.message || 'Generation failed.').replace(/</g,'&lt;')}
+
+If you're running this locally, deploy to Vercel and set GEMINI_API_KEY as an environment variable.</pre>
+          </div>
+        `;
+      } finally {
+        customGenerate.disabled = false;
+        customGenerate.classList.remove('loading');
+        btnText.textContent = originalText;
+      }
+    });
+  }
+
+  // ── Notes sidebar (localStorage) ──────────────
+  const notesToggle = document.querySelector('.notes-toggle');
+  const notesPanel = document.querySelector('.notes-panel');
+  const notesClose = document.querySelector('.notes-close');
+  const notesTextarea = document.getElementById('notes-textarea');
+  if (notesToggle && notesPanel && notesTextarea) {
+    notesTextarea.value = localStorage.getItem('build-with-ai-notes') || '';
+    const open = () => {
+      notesPanel.classList.add('open');
+      notesToggle.classList.add('open');
+      notesPanel.setAttribute('aria-hidden', 'false');
+      notesToggle.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      notesPanel.classList.remove('open');
+      notesToggle.classList.remove('open');
+      notesPanel.setAttribute('aria-hidden', 'true');
+      notesToggle.setAttribute('aria-expanded', 'false');
+    };
+    notesToggle.addEventListener('click', () => {
+      if (notesPanel.classList.contains('open')) close();
+      else { open(); setTimeout(() => notesTextarea.focus(), 200); }
+    });
+    notesClose?.addEventListener('click', close);
+    let notesSaveTimer;
+    notesTextarea.addEventListener('input', () => {
+      clearTimeout(notesSaveTimer);
+      notesSaveTimer = setTimeout(() => {
+        localStorage.setItem('build-with-ai-notes', notesTextarea.value);
+      }, 300);
+    });
+  }
+
+</script>
+
+</body>
+</html>
