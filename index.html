@@ -98,13 +98,13 @@
 
   /* ── HERO ───────────────────────────────────────── */
   .hero {
-    padding: 120px 32px 40px;
+    padding: 90px 32px 32px;
     display: flex; flex-direction: column;
     border-bottom: 1px solid var(--line);
     position: relative;
   }
   .hero-top {
-    display: flex; justify-content: space-between; align-items: flex-start;
+    display: flex; justify-content: flex-end; align-items: flex-start;
     gap: 40px; flex-wrap: wrap;
   }
   .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -114,7 +114,7 @@
     font-size: clamp(52px, 7.4vw, 108px);
     line-height: 0.92;
     letter-spacing: -0.035em;
-    margin: 56px 0 40px;
+    margin: 28px 0 28px;
     max-width: 1100px;
     color: var(--ink);
   }
@@ -1394,10 +1394,6 @@
 <!-- ─────────────────────── HERO ─────────────────────── -->
 <section class="hero">
   <div class="hero-top">
-    <div class="hero-chips">
-      <span class="chip solid-accent">For people who make things</span>
-      <span class="chip">No code required</span>
-    </div>
     <div class="iwant-launcher">
       <button class="iwant-trigger" aria-haspopup="true" aria-expanded="false">
         <span>I want to...</span>
@@ -2545,9 +2541,11 @@ If you're running this locally, deploy to Vercel and set GEMINI_API_KEY as an en
       pre.src = item.src;
     }
 
+    const stripPeriod = (s) => s.replace(/\.$/, '');
+
     function updateCaption(item) {
       reelClient.textContent = item.client;
-      reelTitle.textContent = item.title;
+      reelTitle.textContent = stripPeriod(item.title);
       reelIndex.textContent = pad(idx + 1) + ' / ' + pad(order.length);
     }
 
