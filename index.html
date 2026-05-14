@@ -98,9 +98,8 @@
 
   /* ── HERO ───────────────────────────────────────── */
   .hero {
-    min-height: 100vh;
-    padding: 120px 32px 80px;
-    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 120px 32px 40px;
+    display: flex; flex-direction: column;
     border-bottom: 1px solid var(--line);
     position: relative;
   }
@@ -674,6 +673,184 @@
 
   /* scroll-margin for sticky meta-bar offset on navigation */
   .starter, .step, .custom-idea, .where { scroll-margin-top: 70px; }
+
+  /* ── REEL (work-examples carousel beneath hero) ── */
+  .reel {
+    padding: 36px 32px 60px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .reel-inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .reel-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-quiet);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .reel-eyebrow .reel-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: pulse 2s infinite;
+  }
+  .reel-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    min-height: 44px;
+    transition: opacity 0.25s ease;
+  }
+  .reel-client {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .reel-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(17px, 1.9vw, 22px);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    flex: 1;
+    min-width: 0;
+  }
+  .reel-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--ink);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .reel-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    will-change: opacity;
+  }
+  .reel-img.active { opacity: 1; }
+  .reel-header.fading { opacity: 0; }
+
+  .reel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(24, 24, 27, 0.55);
+    color: var(--paper);
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    z-index: 2;
+    opacity: 0;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .reel-frame:hover .reel-arrow { opacity: 1; }
+  .reel-arrow:hover { background: var(--ink); }
+  .reel-arrow svg { width: 18px; height: 18px; }
+  .reel-prev { left: 14px; }
+  .reel-next { right: 14px; }
+
+  .reel-paused-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(24, 24, 27, 0.7);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 2px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .reel.paused .reel-paused-badge { opacity: 1; }
+
+  .reel-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .reel-index {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-quiet);
+    font-weight: 500;
+  }
+  .reel-toggle {
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 6px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+  }
+  .reel-toggle:hover { background: var(--ink); color: var(--paper); }
+  .reel-toggle svg { width: 10px; height: 10px; fill: currentColor; }
+  .reel-toggle .reel-play-icon { display: none; }
+  .reel.paused .reel-toggle .reel-pause-icon { display: none; }
+  .reel.paused .reel-toggle .reel-play-icon { display: block; }
+
+  @media (max-width: 720px) {
+    .reel { padding: 32px 20px 60px; }
+    .reel-arrow { opacity: 1; width: 38px; height: 38px; }
+    .reel-arrow svg { width: 18px; height: 18px; }
+    .reel-prev { left: 8px; }
+    .reel-next { right: 8px; }
+  }
+
 
   /* ── HERO DROPDOWN "I WANT TO..." ──────────────── */
   .iwant-launcher {
@@ -1249,6 +1426,36 @@
     <p class="hero-subline">Microsites, briefs, dashboards, interactive insights — <em>single-page HTML builds</em> you can share with a link, an email, or as an attachment.</p>
   </div>
 
+</section>
+
+<!-- ─────────────────────── REEL ─────────────────────── -->
+<section class="reel" id="reel" aria-label="Work examples">
+  <div class="reel-inner">
+    <span class="reel-eyebrow"><span class="reel-dot"></span>Built by the team</span>
+    <div class="reel-header" id="reel-header">
+      <span class="reel-client" id="reel-client">CLIENT</span>
+      <h3 class="reel-title" id="reel-title">Loading…</h3>
+    </div>
+    <div class="reel-frame" id="reel-frame">
+      <span class="reel-paused-badge">Paused</span>
+      <img class="reel-img" id="reel-img-a" alt="" loading="lazy">
+      <img class="reel-img" id="reel-img-b" alt="" loading="lazy">
+      <button class="reel-arrow reel-prev" id="reel-prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="reel-arrow reel-next" id="reel-next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="reel-controls">
+      <span class="reel-index" id="reel-index">01 / 12</span>
+      <button class="reel-toggle" id="reel-toggle" aria-label="Pause">
+        <svg class="reel-pause-icon" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+        <svg class="reel-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <span class="reel-toggle-label">Pause</span>
+      </button>
+    </div>
+  </div>
 </section>
 
 <!-- ─────────────────────── INTRO ─────────────────────── -->
@@ -2282,6 +2489,164 @@ If you're running this locally, deploy to Vercel and set GEMINI_API_KEY as an en
       } catch (e) {}
     }
   }
+
+  // ── Work-examples reel ─────────────────────────
+  (function initReel() {
+    const items = [
+      { client: 'Adidas',        title: 'Scoring moments across the 2027 calendar.',                                       src: 'https://i.postimg.cc/wj3M69DF/Screen-Recording2026-05-14at6-26-11AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Adidas',        title: 'Quantitative metrics behind creative concepts — media + creative cohesion.',     src: 'https://i.postimg.cc/0QGDp9W9/Screen-Recording2026-05-14at6-35-55AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Adidas',        title: 'Social sentiment + listening on the hero World Cup film release.',                src: 'https://i.postimg.cc/SKfc9yt2/Screen-Recording2026-05-14at6-38-46AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'DoorDash',      title: 'Upfront analysis.',                                                                src: 'https://i.postimg.cc/W1WBvkvk/Screen-Recording2026-05-14at6-43-50AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Audible',       title: 'Pitching a Depop idea.',                                                          src: 'https://i.postimg.cc/XvTFtQ1H/Screen-Recording2026-05-14at6-51-51AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Audible',       title: 'Pitching big media ideas.',                                                        src: 'https://i.postimg.cc/x8G4XkbC/Screen-Recording2026-05-14at6-53-37AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Google',        title: 'Cultural domains by PA, by market.',                                              src: 'https://i.postimg.cc/85Y1Z0yh/Screen-Recording2026-05-14at7-04-13AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Google',        title: 'Gemini competitive spend dashboard.',                                             src: 'https://i.postimg.cc/vH30Cwrz/Screen-Recording2026-05-14at6-57-45AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Google',        title: 'Investment value and whitespace across sports.',                                  src: 'https://i.postimg.cc/htMh9pqz/Screen-Recording2026-05-14at7-05-30AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Google',        title: 'A new "why now" for gaming.',                                                     src: 'https://i.postimg.cc/nhw23K40/Screen-Recording2026-05-14at7-11-30AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Google',        title: 'Prioritizing World Cup matchups by national interest.',                            src: 'https://i.postimg.cc/W4nKpqgv/Screen-Recording2026-05-14at7-10-04AM-ezgif-com-video-to-gif-converter.gif' },
+      { client: 'Scroll & Tell', title: 'Niche interests as a marketer’s monthly cultural report.',                    src: 'https://i.postimg.cc/0y9FTCK7/Screen-Recording2026-05-14at7-08-38AM-ezgif-com-video-to-gif-converter.gif' }
+    ];
+
+    const reel       = document.getElementById('reel');
+    const reelFrame  = document.getElementById('reel-frame');
+    const reelHeader = document.getElementById('reel-header');
+    const reelImgs   = [document.getElementById('reel-img-a'), document.getElementById('reel-img-b')];
+    const reelClient = document.getElementById('reel-client');
+    const reelTitle  = document.getElementById('reel-title');
+    const reelIndex  = document.getElementById('reel-index');
+    const reelPrev   = document.getElementById('reel-prev');
+    const reelNext   = document.getElementById('reel-next');
+    const reelToggle = document.getElementById('reel-toggle');
+    const reelToggleLabel = reelToggle?.querySelector('.reel-toggle-label');
+
+    if (!reel || !reelImgs[0] || items.length === 0) return;
+
+    // Fisher–Yates shuffle so each visit feels fresh
+    const order = items.slice();
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+
+    let idx = 0;
+    let activeImg = 0; // which of reelImgs is currently visible
+    let timer = null;
+    let paused = false;
+    let transitioning = false;
+    const ADVANCE_MS = 6000;
+    const FADE_MS = 600;
+
+    const pad = (n) => String(n).padStart(2, '0');
+
+    function preloadIndex(i) {
+      const item = order[i % order.length];
+      if (!item) return;
+      const pre = new Image();
+      pre.src = item.src;
+    }
+
+    function updateCaption(item) {
+      reelClient.textContent = item.client;
+      reelTitle.textContent = item.title;
+      reelIndex.textContent = pad(idx + 1) + ' / ' + pad(order.length);
+    }
+
+    function transitionTo(nextIdx) {
+      if (transitioning) return;
+      transitioning = true;
+      idx = (nextIdx + order.length) % order.length;
+      const item = order[idx];
+      const incoming = 1 - activeImg;
+      const incomingImg = reelImgs[incoming];
+      incomingImg.src = item.src;
+      incomingImg.alt = item.client + ' — ' + item.title;
+
+      const swap = () => {
+        // Crossfade: incoming becomes active, outgoing fades out (same transition timing)
+        incomingImg.classList.add('active');
+        reelImgs[activeImg].classList.remove('active');
+        activeImg = incoming;
+
+        // Fade caption out, swap, fade in (mid-crossfade)
+        reelHeader.classList.add('fading');
+        setTimeout(() => {
+          updateCaption(item);
+          reelHeader.classList.remove('fading');
+        }, 200);
+
+        preloadIndex(idx + 1);
+        setTimeout(() => { transitioning = false; }, FADE_MS);
+      };
+
+      if (incomingImg.complete && incomingImg.naturalWidth > 0) {
+        swap();
+      } else {
+        let done = false;
+        const fire = () => { if (!done) { done = true; swap(); } };
+        incomingImg.onload = fire;
+        incomingImg.onerror = fire;
+      }
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      if (paused) return;
+      timer = setInterval(() => transitionTo(idx + 1), ADVANCE_MS);
+    }
+
+    function setPaused(next) {
+      paused = next;
+      reel.classList.toggle('paused', paused);
+      reelToggle.setAttribute('aria-label', paused ? 'Play' : 'Pause');
+      if (reelToggleLabel) reelToggleLabel.textContent = paused ? 'Play' : 'Pause';
+      if (paused) clearInterval(timer);
+      else startTimer();
+    }
+
+    // Init — set first image active immediately, caption rendered, start timer + preload
+    const initial = order[idx];
+    reelImgs[activeImg].src = initial.src;
+    reelImgs[activeImg].alt = initial.client + ' — ' + initial.title;
+    reelImgs[activeImg].classList.add('active');
+    updateCaption(initial);
+    preloadIndex(idx + 1);
+    startTimer();
+
+    // Wire controls
+    reelPrev?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      transitionTo(idx - 1);
+      if (!paused) startTimer();
+    });
+    reelNext?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      transitionTo(idx + 1);
+      if (!paused) startTimer();
+    });
+    reelToggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setPaused(!paused);
+    });
+    reelFrame?.addEventListener('click', (e) => {
+      // Don't toggle if the click was on an arrow
+      if (e.target.closest('.reel-arrow')) return;
+      setPaused(!paused);
+    });
+
+    // Pause when the section isn't visible (saves CPU on long pages)
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) {
+            clearInterval(timer);
+          } else if (!paused) {
+            startTimer();
+          }
+        }
+      }, { threshold: 0.1 });
+      io.observe(reel);
+    }
+  })();
 
 </script>
 
