@@ -188,8 +188,30 @@
     .pillar:last-child { border-bottom: none; }
   }
 
-  /* ── STEPS SECTION ──────────────────────────────── */
-  .steps-section { padding: 80px 0 40px; }
+  /* ── STEPS SECTION (dark band) ──────────────────── */
+  .steps-section {
+    /* Dark-mode scope: flip the meaning of --paper and --ink within here */
+    --paper: #1F1F23;
+    --paper-2: #26262A;
+    --paper-3: #34343A;
+    --ink: #FAF8F3;
+    --ink-soft: rgba(250, 248, 243, 0.75);
+    --ink-quiet: rgba(250, 248, 243, 0.55);
+    --line: rgba(250, 248, 243, 0.12);
+    --line-strong: rgba(250, 248, 243, 0.2);
+    --accent-deep: var(--accent);
+
+    background: #18181B;
+    color: var(--ink);
+    padding: 90px 0 60px;
+  }
+  /* hover bg uses an rgba literal in the base CSS; override for dark */
+  .steps-section .step:hover { background: rgba(250, 248, 243, 0.03); }
+  /* keep dark text on cyan for the .solid-accent chip in dark scope */
+  .steps-section .chip.solid-accent {
+    color: #18181B;
+    border-color: #18181B;
+  }
   .steps-header {
     padding: 0 32px;
     max-width: 1400px;
@@ -1504,6 +1526,229 @@
   </div>
 </section>
 
+<!-- ─────────────────────── STEPS ─────────────────────── -->
+<section class="steps-section">
+  <div class="steps-header">
+    <h2>The <em>seven</em> moves.</h2>
+    <p class="header-sub">Here's how the build actually happens.</p>
+  </div>
+
+  <!-- STEP 1 -->
+  <article class="step" data-step="1">
+    <div class="step-head">
+      <div class="step-num">STEP 01</div>
+      <h3 class="step-title">Name the problem <em>before</em> you name the solution.</h3>
+      <span class="chip solid-ink">Define</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">Before you open Claude — write down, in plain language, what you're actually trying to do. "I want a microsite" isn't a problem; "my team keeps losing track of approved ideas across three docs" is.</p>
+          <ul class="checklist">
+            <li><strong>Who is this for, and what moment do they encounter it?</strong> A pitch? A team Monday morning? A friend you're texting a link to?</li>
+            <li><strong>What does success look like in one sentence?</strong> If you can't write that sentence, you're not ready to brief anything.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">Rule of thumb</span>
+            <p>If your idea fits in a tweet, it's ready to build. If it takes a paragraph to explain the setup before the idea lands, keep editing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 2 -->
+  <article class="step" data-step="2">
+    <div class="step-head">
+      <div class="step-num">STEP 02</div>
+      <h3 class="step-title">Brain-dump in a <em>voice note</em>. Hand it to the model.</h3>
+      <span class="chip solid-ink">Dump</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">The fastest way from idea to brief is to talk, not type. Open the Claude app, hit the mic, and ramble for two to four minutes — audience, what exists, what inspires, what you're worried about. Don't edit yourself. Then ask the model to do three things:</p>
+          <ul class="checklist">
+            <li><strong>Play back what you said in clean structure.</strong> Audience, problem, success state, tone, constraints.</li>
+            <li><strong>Ask you the questions a good strategist would ask</strong> before drafting anything.</li>
+            <li><strong>Only after you've answered, draft a prompt</strong> you can use to start the real build in a fresh chat.</li>
+          </ul>
+          <div class="quote-box">
+            <span class="label">→ TRY THIS OPENER</span>
+            <p>I'm going to ramble for a few minutes. When I'm done, play back what I said in structured form, then ask me the questions a senior strategist would ask before drafting anything. Don't make anything yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 3 -->
+  <article class="step" data-step="3">
+    <div class="step-head">
+      <div class="step-num">STEP 03</div>
+      <h3 class="step-title">Show, don't <em>tell</em>. Feed it your taste.</h3>
+      <span class="chip solid-ink">References</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">References are where most AI builds win or lose their identity. The more particular your taste cues, the more the output will look like you and not a template — without them, models default to an aesthetic average (card-heavy, slightly purple, forgettable).</p>
+          <div class="chip-row">
+            <span class="chip">Screenshots</span>
+            <span class="chip">Named aesthetic</span>
+            <span class="chip">Anti-references</span>
+            <span class="chip">Vibe word</span>
+          </div>
+          <ul class="checklist">
+            <li><strong>Screenshots of sites you love.</strong> Three to six is plenty. Upload them directly.</li>
+            <li><strong>Name the aesthetic out loud.</strong> "Editorial, like a Bloomberg long-read." "Brutalist with magazine energy." Specificity unlocks better instincts.</li>
+            <li><strong>Anti-references.</strong> Tell it what to avoid by name. "Nothing that looks like a SaaS landing page from 2019."</li>
+            <li><strong>Pick a vibe word and hold it.</strong> Confident. Quiet. Loud. Sharp. Refer back to it when something feels off.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">A trick that works</span>
+            <p>Ask Claude to articulate the design direction back to you <em>before</em> it writes a single line of code. If those sentences don't make you nod, fix them now.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 4 -->
+  <article class="step" data-step="4">
+    <div class="step-head">
+      <div class="step-num">STEP 04</div>
+      <h3 class="step-title">Bring the <em>source material</em>. All of it.</h3>
+      <span class="chip solid-ink">Sources</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">What separates a generic build from a great one isn't a clever brief — it's the material you bring alongside it. The richer the inputs, the sharper the output.</p>
+          <div class="chip-row">
+            <span class="chip">Decks</span>
+            <span class="chip">Voice memos</span>
+            <span class="chip">Real data</span>
+            <span class="chip">Real copy</span>
+            <span class="chip">Brand voice samples</span>
+            <span class="chip">Web search</span>
+          </div>
+          <ul class="checklist">
+            <li><strong>Decks, briefs, notes, voice memos.</strong> Even the rough version. Especially the rough version.</li>
+            <li><strong>Real data and real copy.</strong> Placeholder data leads to placeholder thinking.</li>
+            <li><strong>Brand voice samples.</strong> "Here are five captions that sound like us. Here are three that don't. Learn the difference."</li>
+            <li><strong>Web search where the data is alive.</strong> Current stats, recent news, public sources. Bake citations in so the work is defensible.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">The context principle</span>
+            <p>You are not bothering it. You are not "giving it too much." Front-load the work. <em>The build will be ten times better for it.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 5 -->
+  <article class="step" data-step="5">
+    <div class="step-head">
+      <div class="step-num">STEP 05</div>
+      <h3 class="step-title">Build the first cut. Then push <em>back</em>.</h3>
+      <span class="chip solid-ink">Iterate</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">Ask for an artifact — a single self-contained HTML page is the right starting point for most ideas. The first version will be a draft; your job now is editor, not briefer.</p>
+          <ul class="checklist">
+            <li><strong>React in plain language.</strong> "This feels too AI-generated." "It's reading as a template." The model can take honest feedback.</li>
+            <li><strong>Ask it to break its own pattern.</strong> "What's a more unique design language we could layer on this?"</li>
+            <li><strong>Edit one thing at a time.</strong> Big "fix everything" requests produce muddled results. Tight, specific asks compound.</li>
+            <li><strong>Save versions.</strong> If you wander somewhere worse, you can always come back.</li>
+          </ul>
+          <div class="quote-box">
+            <span class="label">→ USEFUL PHRASES</span>
+            <p>"Make this feel less like a template and more like something a human designed."<br><br>"Break the grid. I want intentional asymmetry, not symmetry."<br><br>"Cut everything that isn't load-bearing. Fewer ideas, executed harder."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 6 -->
+  <article class="step" data-step="6">
+    <div class="step-head">
+      <div class="step-num">STEP 06</div>
+      <h3 class="step-title">Put it <em>somewhere</em> people can see it.</h3>
+      <span class="chip solid-ink">Host</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">Once you have an HTML file, getting it in front of someone is straightforward. A handful of paths — email, free hosting, internal team links — depending on who needs to see it and whether you'll iterate.</p>
+          <div class="chip-row">
+            <span class="chip">Email</span>
+            <span class="chip solid-accent">Claude public link</span>
+            <span class="chip">Google Sites</span>
+            <span class="chip">GitHub Pages</span>
+            <span class="chip">Vercel</span>
+          </div>
+          <ul class="checklist">
+            <li><strong>Email it.</strong> An HTML file as an attachment opens directly in any browser. Zero setup — fine for one-off sends.</li>
+            <li><strong>Claude artifact link.</strong> Fastest path if you built it as an artifact. Click "Publish" and you get a public URL anyone can open without an account.</li>
+            <li><strong>Google Sites.</strong> Host the HTML inside Google Workspace and share it with anyone in your org. Good for internal team distribution when you want a real URL but not the open internet.</li>
+            <li><strong>GitHub Pages.</strong> Free. Drop your HTML into a repo, turn on Pages, you get a permanent URL like <span class="mono" style="color:var(--ink);font-size:13px;background:var(--paper-3);padding:2px 6px;border-radius:3px">yourname.github.io/project</span>.</li>
+            <li><strong>Vercel.</strong> Drag-and-drop hosting with environment-variable support if you ever need it for API keys.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">One thing to know</span>
+            <p>If your project calls an external AI service at runtime, don't paste an API key directly into a public HTML file — anyone can view source. For a quick share, you almost certainly don't need this. <em>Start static.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- STEP 7 -->
+  <article class="step" data-step="7">
+    <div class="step-head">
+      <div class="step-num">STEP 07</div>
+      <h3 class="step-title">Build an <em>Open Companion</em>.</h3>
+      <span class="chip solid-accent">Connect</span>
+      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="step-body">
+      <div class="step-body-inner">
+        <div></div>
+        <div class="step-body-content">
+          <p class="lead">The artifact you built is one moment. The Companion is the persistent version of it — an agent (or small agentic team) inside Open, trained on the same knowledge and ready for anyone on the team to pick up, push further, and feed with their own context.</p>
+          <ul class="checklist">
+            <li><strong>Decide what knowledge feeds it.</strong> The same context you used to build the artifact — brief, deck, research, voice notes. Cleaner inputs make a sharper Companion.</li>
+            <li><strong>One agent or a team?</strong> A single Companion is right for narrow use cases (one brief, one trend). An agentic team is better when the use case has distinct roles — strategist, planner, creative — that each need their own POV.</li>
+            <li><strong>Set what it accepts as new input.</strong> Decide what people can drop in: only proprietary research, or public sources too. Clear rules make the Companion trustworthy.</li>
+            <li><strong>Write its opening prompt.</strong> Frame the Companion the way you'd frame a strategy meeting — what's on the table, what we're solving for, how it can help.</li>
+          </ul>
+          <div class="callout">
+            <span class="label">The compounding move</span>
+            <p>The build is the moment. The Companion is the <em>system</em> — same knowledge, persistent, queryable, growing every time someone touches it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
 <!-- ─────────────────────── LOW-HANGING FRUIT ─────────────────────── -->
 <section class="starters">
   <div class="starters-inner">
@@ -1841,229 +2086,6 @@ Before you build, ask me which audience or product line within the brand I want 
     </div>
     <div id="custom-idea-result" class="custom-idea-result" hidden></div>
   </div>
-</section>
-
-<!-- ─────────────────────── STEPS ─────────────────────── -->
-<section class="steps-section">
-  <div class="steps-header">
-    <h2>The <em>seven</em> moves.</h2>
-    <p class="header-sub">Here's how the build actually happens.</p>
-  </div>
-
-  <!-- STEP 1 -->
-  <article class="step" data-step="1">
-    <div class="step-head">
-      <div class="step-num">STEP 01</div>
-      <h3 class="step-title">Name the problem <em>before</em> you name the solution.</h3>
-      <span class="chip solid-ink">Define</span>
-      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="step-body">
-      <div class="step-body-inner">
-        <div></div>
-        <div class="step-body-content">
-          <p class="lead">Before you open Claude — write down, in plain language, what you're actually trying to do. "I want a microsite" isn't a problem; "my team keeps losing track of approved ideas across three docs" is.</p>
-          <ul class="checklist">
-            <li><strong>Who is this for, and what moment do they encounter it?</strong> A pitch? A team Monday morning? A friend you're texting a link to?</li>
-            <li><strong>What does success look like in one sentence?</strong> If you can't write that sentence, you're not ready to brief anything.</li>
-          </ul>
-          <div class="callout">
-            <span class="label">Rule of thumb</span>
-            <p>If your idea fits in a tweet, it's ready to build. If it takes a paragraph to explain the setup before the idea lands, keep editing.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 2 -->
-  <article class="step" data-step="2">
-    <div class="step-head">
-      <div class="step-num">STEP 02</div>
-      <h3 class="step-title">Brain-dump in a <em>voice note</em>. Hand it to the model.</h3>
-      <span class="chip solid-ink">Dump</span>
-      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="step-body">
-      <div class="step-body-inner">
-        <div></div>
-        <div class="step-body-content">
-          <p class="lead">The fastest way from idea to brief is to talk, not type. Open the Claude app, hit the mic, and ramble for two to four minutes — audience, what exists, what inspires, what you're worried about. Don't edit yourself. Then ask the model to do three things:</p>
-          <ul class="checklist">
-            <li><strong>Play back what you said in clean structure.</strong> Audience, problem, success state, tone, constraints.</li>
-            <li><strong>Ask you the questions a good strategist would ask</strong> before drafting anything.</li>
-            <li><strong>Only after you've answered, draft a prompt</strong> you can use to start the real build in a fresh chat.</li>
-          </ul>
-          <div class="quote-box">
-            <span class="label">→ TRY THIS OPENER</span>
-            <p>I'm going to ramble for a few minutes. When I'm done, play back what I said in structured form, then ask me the questions a senior strategist would ask before drafting anything. Don't make anything yet.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 3 -->
-  <article class="step" data-step="3">
-    <div class="step-head">
-      <div class="step-num">STEP 03</div>
-      <h3 class="step-title">Show, don't <em>tell</em>. Feed it your taste.</h3>
-      <span class="chip solid-ink">References</span>
-      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="step-body">
-      <div class="step-body-inner">
-        <div></div>
-        <div class="step-body-content">
-          <p class="lead">References are where most AI builds win or lose their identity. The more particular your taste cues, the more the output will look like you and not a template — without them, models default to an aesthetic average (card-heavy, slightly purple, forgettable).</p>
-          <div class="chip-row">
-            <span class="chip">Screenshots</span>
-            <span class="chip">Named aesthetic</span>
-            <span class="chip">Anti-references</span>
-            <span class="chip">Vibe word</span>
-          </div>
-          <ul class="checklist">
-            <li><strong>Screenshots of sites you love.</strong> Three to six is plenty. Upload them directly.</li>
-            <li><strong>Name the aesthetic out loud.</strong> "Editorial, like a Bloomberg long-read." "Brutalist with magazine energy." Specificity unlocks better instincts.</li>
-            <li><strong>Anti-references.</strong> Tell it what to avoid by name. "Nothing that looks like a SaaS landing page from 2019."</li>
-            <li><strong>Pick a vibe word and hold it.</strong> Confident. Quiet. Loud. Sharp. Refer back to it when something feels off.</li>
-          </ul>
-          <div class="callout">
-            <span class="label">A trick that works</span>
-            <p>Ask Claude to articulate the design direction back to you <em>before</em> it writes a single line of code. If those sentences don't make you nod, fix them now.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 4 -->
-  <article class="step" data-step="4">
-    <div class="step-head">
-      <div class="step-num">STEP 04</div>
-      <h3 class="step-title">Bring the <em>source material</em>. All of it.</h3>
-      <span class="chip solid-ink">Sources</span>
-      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="step-body">
-      <div class="step-body-inner">
-        <div></div>
-        <div class="step-body-content">
-          <p class="lead">What separates a generic build from a great one isn't a clever brief — it's the material you bring alongside it. The richer the inputs, the sharper the output.</p>
-          <div class="chip-row">
-            <span class="chip">Decks</span>
-            <span class="chip">Voice memos</span>
-            <span class="chip">Real data</span>
-            <span class="chip">Real copy</span>
-            <span class="chip">Brand voice samples</span>
-            <span class="chip">Web search</span>
-          </div>
-          <ul class="checklist">
-            <li><strong>Decks, briefs, notes, voice memos.</strong> Even the rough version. Especially the rough version.</li>
-            <li><strong>Real data and real copy.</strong> Placeholder data leads to placeholder thinking.</li>
-            <li><strong>Brand voice samples.</strong> "Here are five captions that sound like us. Here are three that don't. Learn the difference."</li>
-            <li><strong>Web search where the data is alive.</strong> Current stats, recent news, public sources. Bake citations in so the work is defensible.</li>
-          </ul>
-          <div class="callout">
-            <span class="label">The context principle</span>
-            <p>You are not bothering it. You are not "giving it too much." Front-load the work. <em>The build will be ten times better for it.</em></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 5 -->
-  <article class="step" data-step="5">
-    <div class="step-head">
-      <div class="step-num">STEP 05</div>
-      <h3 class="step-title">Build the first cut. Then push <em>back</em>.</h3>
-      <span class="chip solid-ink">Iterate</span>
-      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="step-body">
-      <div class="step-body-inner">
-        <div></div>
-        <div class="step-body-content">
-          <p class="lead">Ask for an artifact — a single self-contained HTML page is the right starting point for most ideas. The first version will be a draft; your job now is editor, not briefer.</p>
-          <ul class="checklist">
-            <li><strong>React in plain language.</strong> "This feels too AI-generated." "It's reading as a template." The model can take honest feedback.</li>
-            <li><strong>Ask it to break its own pattern.</strong> "What's a more unique design language we could layer on this?"</li>
-            <li><strong>Edit one thing at a time.</strong> Big "fix everything" requests produce muddled results. Tight, specific asks compound.</li>
-            <li><strong>Save versions.</strong> If you wander somewhere worse, you can always come back.</li>
-          </ul>
-          <div class="quote-box">
-            <span class="label">→ USEFUL PHRASES</span>
-            <p>"Make this feel less like a template and more like something a human designed."<br><br>"Break the grid. I want intentional asymmetry, not symmetry."<br><br>"Cut everything that isn't load-bearing. Fewer ideas, executed harder."</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 6 -->
-  <article class="step" data-step="6">
-    <div class="step-head">
-      <div class="step-num">STEP 06</div>
-      <h3 class="step-title">Put it <em>somewhere</em> people can see it.</h3>
-      <span class="chip solid-ink">Host</span>
-      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="step-body">
-      <div class="step-body-inner">
-        <div></div>
-        <div class="step-body-content">
-          <p class="lead">Once you have an HTML file, getting it in front of someone is straightforward. A handful of paths — email, free hosting, internal team links — depending on who needs to see it and whether you'll iterate.</p>
-          <div class="chip-row">
-            <span class="chip">Email</span>
-            <span class="chip solid-accent">Claude public link</span>
-            <span class="chip">Google Sites</span>
-            <span class="chip">GitHub Pages</span>
-            <span class="chip">Vercel</span>
-          </div>
-          <ul class="checklist">
-            <li><strong>Email it.</strong> An HTML file as an attachment opens directly in any browser. Zero setup — fine for one-off sends.</li>
-            <li><strong>Claude artifact link.</strong> Fastest path if you built it as an artifact. Click "Publish" and you get a public URL anyone can open without an account.</li>
-            <li><strong>Google Sites.</strong> Host the HTML inside Google Workspace and share it with anyone in your org. Good for internal team distribution when you want a real URL but not the open internet.</li>
-            <li><strong>GitHub Pages.</strong> Free. Drop your HTML into a repo, turn on Pages, you get a permanent URL like <span class="mono" style="color:var(--ink);font-size:13px;background:var(--paper-3);padding:2px 6px;border-radius:3px">yourname.github.io/project</span>.</li>
-            <li><strong>Vercel.</strong> Drag-and-drop hosting with environment-variable support if you ever need it for API keys.</li>
-          </ul>
-          <div class="callout">
-            <span class="label">One thing to know</span>
-            <p>If your project calls an external AI service at runtime, don't paste an API key directly into a public HTML file — anyone can view source. For a quick share, you almost certainly don't need this. <em>Start static.</em></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- STEP 7 -->
-  <article class="step" data-step="7">
-    <div class="step-head">
-      <div class="step-num">STEP 07</div>
-      <h3 class="step-title">Build an <em>Open Companion</em>.</h3>
-      <span class="chip solid-accent">Connect</span>
-      <div class="step-toggle"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    </div>
-    <div class="step-body">
-      <div class="step-body-inner">
-        <div></div>
-        <div class="step-body-content">
-          <p class="lead">The artifact you built is one moment. The Companion is the persistent version of it — an agent (or small agentic team) inside Open, trained on the same knowledge and ready for anyone on the team to pick up, push further, and feed with their own context.</p>
-          <ul class="checklist">
-            <li><strong>Decide what knowledge feeds it.</strong> The same context you used to build the artifact — brief, deck, research, voice notes. Cleaner inputs make a sharper Companion.</li>
-            <li><strong>One agent or a team?</strong> A single Companion is right for narrow use cases (one brief, one trend). An agentic team is better when the use case has distinct roles — strategist, planner, creative — that each need their own POV.</li>
-            <li><strong>Set what it accepts as new input.</strong> Decide what people can drop in: only proprietary research, or public sources too. Clear rules make the Companion trustworthy.</li>
-            <li><strong>Write its opening prompt.</strong> Frame the Companion the way you'd frame a strategy meeting — what's on the table, what we're solving for, how it can help.</li>
-          </ul>
-          <div class="callout">
-            <span class="label">The compounding move</span>
-            <p>The build is the moment. The Companion is the <em>system</em> — same knowledge, persistent, queryable, growing every time someone touches it.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
 </section>
 
 <!-- ─────────────────────── PRINCIPLES (three pillars) ─────────────────────── -->
