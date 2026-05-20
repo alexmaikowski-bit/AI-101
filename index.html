@@ -883,23 +883,42 @@
   .iwant-launcher {
     position: relative;
     z-index: 40;
+    isolation: isolate;
+  }
+  .iwant-launcher::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 10px;
+    background: conic-gradient(from 0deg,
+      #ff3d8b, #ff8a3d, #ffe14d, #6dff8c,
+      #4dc4ff, #b066ff, #ff3d8b);
+    filter: blur(16px);
+    opacity: 0.9;
+    z-index: -1;
+    animation: iwant-glow-spin 5s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes iwant-glow-spin {
+    to { transform: rotate(360deg); }
   }
   .iwant-trigger {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 11px 18px;
+    padding: 13px 22px;
     background: var(--ink);
     color: var(--paper);
     border: 1px solid var(--ink);
-    border-radius: 2px;
+    border-radius: 4px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.16em;
+    font-size: 12px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
     transition: background 0.2s, border-color 0.2s;
+    position: relative;
   }
   .iwant-trigger:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
   .iwant-trigger svg {
@@ -1412,6 +1431,7 @@
   .star-callout {
     position: relative;
     max-width: 380px;
+    margin-top: 24px;
     background: var(--paper);
     border: 1px solid var(--ink);
     padding: 16px 38px 16px 18px;
@@ -1425,6 +1445,15 @@
     z-index: 30;
     transition: opacity 0.5s ease, transform 0.5s ease;
     animation: star-callout-in 0.7s ease-out 0.2s both;
+  }
+  @media (min-width: 1200px) {
+    .star-callout {
+      position: absolute;
+      top: 150px;
+      right: 32px;
+      margin-top: 0;
+      max-width: 300px;
+    }
   }
   @keyframes star-callout-in {
     0%   { opacity: 0; transform: rotate(-1.6deg) translateY(-14px) scale(0.92); }
@@ -1525,8 +1554,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    padding: 70px 32px;
+    gap: 14px;
+    padding: 36px 32px;
     text-align: center;
     background: var(--paper);
     position: relative;
@@ -1537,7 +1566,8 @@
     background: #18181B;
     color: var(--paper);
   }
-  .section-break.dramatic { padding: 110px 32px; }
+  .section-break.dramatic { padding: 56px 32px; }
+  .section-break + section { padding-top: 44px; }
 
   .section-break-cue {
     font-family: 'JetBrains Mono', monospace;
@@ -1633,9 +1663,10 @@
   }
 
   @media (max-width: 720px) {
-    .section-break { padding: 50px 20px; }
-    .section-break.dramatic { padding: 80px 20px; }
-    .section-break-line { height: 40px; }
+    .section-break { padding: 28px 20px; }
+    .section-break.dramatic { padding: 44px 20px; }
+    .section-break-line { height: 36px; }
+    .section-break + section { padding-top: 32px; }
   }
 </style>
 </head>
@@ -1652,45 +1683,9 @@
 <!-- ─────────────────────── HERO ─────────────────────── -->
 <section class="hero">
   <div class="hero-top">
-    <div class="star-callout" id="star-callout" role="note" aria-label="Note from leadership">
-      <button class="star-callout-close" aria-label="Dismiss">&times;</button>
-      <div class="star-3d" aria-hidden="true">
-        <div class="star-3d-inner">
-          <div class="star-face front">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="starFrontGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%"   stop-color="#7FF3FF"/>
-                  <stop offset="55%"  stop-color="#00E5FF"/>
-                  <stop offset="100%" stop-color="#0E7490"/>
-                </linearGradient>
-              </defs>
-              <path d="M50 4 L61 38 L97 38 L67 59 L78 94 L50 73 L22 94 L33 59 L3 38 L39 38 Z"
-                    fill="url(#starFrontGrad)" stroke="#18181B" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="star-face back">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="starBackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%"   stop-color="#0E7490"/>
-                  <stop offset="100%" stop-color="#18181B"/>
-                </linearGradient>
-              </defs>
-              <path d="M50 4 L61 38 L97 38 L67 59 L78 94 L50 73 L22 94 L33 59 L3 38 L39 38 Z"
-                    fill="url(#starBackGrad)" stroke="#18181B" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="star-callout-copy">
-        <span class="star-callout-eyebrow">Heads up</span>
-        <p>This <strong>isn't a replacement</strong> for all your deliverables — just a way to stop making boring decks for the moments that don't need one.</p>
-      </div>
-    </div>
     <div class="iwant-launcher">
       <button class="iwant-trigger" aria-haspopup="true" aria-expanded="false">
-        <span>I want to...</span>
+        <span>Jump to a use case</span>
         <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="iwant-menu" role="menu">
@@ -1703,6 +1698,43 @@
         <div class="iwant-divider"></div>
         <button class="iwant-option iwant-custom" data-target="custom">Build something custom &rarr;</button>
       </div>
+    </div>
+  </div>
+
+  <div class="star-callout" id="star-callout" role="note" aria-label="Note from leadership">
+    <button class="star-callout-close" aria-label="Dismiss">&times;</button>
+    <div class="star-3d" aria-hidden="true">
+      <div class="star-3d-inner">
+        <div class="star-face front">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="starFrontGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#7FF3FF"/>
+                <stop offset="55%"  stop-color="#00E5FF"/>
+                <stop offset="100%" stop-color="#0E7490"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 4 L61 38 L97 38 L67 59 L78 94 L50 73 L22 94 L33 59 L3 38 L39 38 Z"
+                  fill="url(#starFrontGrad)" stroke="#18181B" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="star-face back">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="starBackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#0E7490"/>
+                <stop offset="100%" stop-color="#18181B"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 4 L61 38 L97 38 L67 59 L78 94 L50 73 L22 94 L33 59 L3 38 L39 38 Z"
+                  fill="url(#starBackGrad)" stroke="#18181B" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="star-callout-copy">
+      <span class="star-callout-eyebrow">Heads up</span>
+      <p>This <strong>isn't a replacement</strong> for all your deliverables — just a way to stop making boring decks for the moments that don't need one.</p>
     </div>
   </div>
 
