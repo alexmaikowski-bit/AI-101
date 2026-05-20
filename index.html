@@ -104,8 +104,13 @@
     position: relative;
   }
   .hero-top {
-    display: flex; justify-content: flex-end; align-items: flex-start;
+    display: flex; justify-content: flex-start; align-items: flex-start;
     gap: 40px; flex-wrap: wrap;
+  }
+  .hero-top .iwant-launcher { margin-left: auto; }
+  @media (max-width: 720px) {
+    .hero-top { gap: 24px; }
+    .hero-top .iwant-launcher { margin-left: 0; }
   }
   .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .hero-title {
@@ -989,6 +994,7 @@
     line-height: 1.55;
     color: var(--ink-soft);
   }
+  .where-tool p em { font-style: italic; color: var(--accent-deep); font-weight: 500; }
 
   /* ── CUSTOM IDEA SECTION ─────────────────────── */
   .custom-idea {
@@ -1401,6 +1407,236 @@
     .cta-line { line-height: 2; }
     .cta-line .arrow { margin: 0 6px; }
   }
+
+  /* ── DISMISSIBLE "NOT A DECK-KILLER" STAR CALLOUT ───────── */
+  .star-callout {
+    position: relative;
+    max-width: 380px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 16px 38px 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    border-radius: 2px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.04);
+    transform: rotate(-1.6deg);
+    transform-origin: top left;
+    z-index: 30;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    animation: star-callout-in 0.7s ease-out 0.2s both;
+  }
+  @keyframes star-callout-in {
+    0%   { opacity: 0; transform: rotate(-1.6deg) translateY(-14px) scale(0.92); }
+    100% { opacity: 1; transform: rotate(-1.6deg) translateY(0)     scale(1);   }
+  }
+  .star-callout.dismissed {
+    opacity: 0;
+    transform: rotate(-6deg) translateY(-24px) scale(0.85);
+    pointer-events: none;
+  }
+  .star-callout-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--ink-quiet);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .star-callout-close:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+
+  /* The spinning 3D star itself */
+  .star-3d {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    perspective: 700px;
+    transform-style: preserve-3d;
+    position: relative;
+  }
+  .star-3d-inner {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    animation: star-spin 5.5s linear infinite;
+  }
+  @keyframes star-spin {
+    0%   { transform: rotateY(0deg)   rotateX(8deg); }
+    100% { transform: rotateY(360deg) rotateX(8deg); }
+  }
+  .star-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+  }
+  .star-face svg { width: 100%; height: 100%; display: block; }
+  .star-face.back { transform: rotateY(180deg); }
+  .star-face.front svg { filter: drop-shadow(0 6px 12px rgba(0,229,255,0.35)); }
+
+  .star-callout-copy { min-width: 0; }
+  .star-callout-eyebrow {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .star-callout-copy p {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0;
+  }
+  .star-callout-copy strong {
+    font-weight: 600;
+    background: linear-gradient(180deg, transparent 60%, var(--accent) 60%);
+    padding: 0 3px;
+  }
+  @media (max-width: 720px) {
+    .star-callout {
+      max-width: none;
+      transform: rotate(-1deg);
+      padding: 14px 36px 14px 14px;
+    }
+    .star-callout.dismissed { transform: rotate(-4deg) translateY(-20px) scale(0.85); }
+    .star-3d { width: 54px; height: 54px; }
+    .star-callout-copy p { font-size: 12px; }
+  }
+
+  /* ── NARRATIVE SECTION BREAKS ─────────────────────────── */
+  .section-break {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 70px 32px;
+    text-align: center;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .section-break.on-paper-2 { background: var(--paper-2); }
+  .section-break.on-dark {
+    background: #18181B;
+    color: var(--paper);
+  }
+  .section-break.dramatic { padding: 110px 32px; }
+
+  .section-break-cue {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-quiet);
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+  }
+  .section-break.on-dark .section-break-cue { color: rgba(250,248,243,0.55); }
+  .section-break.visible .section-break-cue {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-break-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(28px, 4.4vw, 52px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 800px;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s;
+  }
+  .section-break.on-dark .section-break-title { color: var(--paper); }
+  .section-break-title em { font-style: italic; color: var(--accent-deep); }
+  .section-break.on-dark .section-break-title em { color: var(--accent); }
+  .section-break.visible .section-break-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-break-line {
+    width: 1px;
+    height: 56px;
+    background: linear-gradient(to bottom, transparent, var(--accent-deep), transparent);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 0.8s ease 0.4s;
+  }
+  .section-break.on-dark .section-break-line {
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  }
+  .section-break.visible .section-break-line { transform: scaleY(1); }
+
+  .section-break-arrow {
+    width: 28px;
+    height: 28px;
+    color: var(--accent-deep);
+    opacity: 0;
+    transition: opacity 0.5s ease 0.6s;
+  }
+  .section-break.on-dark .section-break-arrow { color: var(--accent); }
+  .section-break.dramatic .section-break-arrow { width: 40px; height: 40px; }
+  .section-break.visible .section-break-arrow {
+    opacity: 1;
+    animation: arrow-bounce 1.7s ease-in-out 0.8s infinite;
+  }
+  @keyframes arrow-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(10px); }
+  }
+
+  /* Tiny floating dots behind the dramatic break, for a touch of motion */
+  .section-break.dramatic::before,
+  .section-break.dramatic::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.6s ease 0.5s;
+  }
+  .section-break.dramatic::before { left: 18%; top: 40%; }
+  .section-break.dramatic::after  { right: 18%; bottom: 38%; }
+  .section-break.dramatic.visible::before,
+  .section-break.dramatic.visible::after {
+    opacity: 0.6;
+    animation: drift-dot 4s ease-in-out infinite;
+  }
+  .section-break.dramatic.visible::after { animation-delay: 1.2s; }
+  @keyframes drift-dot {
+    0%, 100% { transform: translate(0, 0)   scale(1);   opacity: 0.6; }
+    50%      { transform: translate(8px, -10px) scale(1.4); opacity: 1; }
+  }
+
+  @media (max-width: 720px) {
+    .section-break { padding: 50px 20px; }
+    .section-break.dramatic { padding: 80px 20px; }
+    .section-break-line { height: 40px; }
+  }
 </style>
 </head>
 <body>
@@ -1416,6 +1652,42 @@
 <!-- ─────────────────────── HERO ─────────────────────── -->
 <section class="hero">
   <div class="hero-top">
+    <div class="star-callout" id="star-callout" role="note" aria-label="Note from leadership">
+      <button class="star-callout-close" aria-label="Dismiss">&times;</button>
+      <div class="star-3d" aria-hidden="true">
+        <div class="star-3d-inner">
+          <div class="star-face front">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="starFrontGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%"   stop-color="#7FF3FF"/>
+                  <stop offset="55%"  stop-color="#00E5FF"/>
+                  <stop offset="100%" stop-color="#0E7490"/>
+                </linearGradient>
+              </defs>
+              <path d="M50 4 L61 38 L97 38 L67 59 L78 94 L50 73 L22 94 L33 59 L3 38 L39 38 Z"
+                    fill="url(#starFrontGrad)" stroke="#18181B" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="star-face back">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="starBackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%"   stop-color="#0E7490"/>
+                  <stop offset="100%" stop-color="#18181B"/>
+                </linearGradient>
+              </defs>
+              <path d="M50 4 L61 38 L97 38 L67 59 L78 94 L50 73 L22 94 L33 59 L3 38 L39 38 Z"
+                    fill="url(#starBackGrad)" stroke="#18181B" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="star-callout-copy">
+        <span class="star-callout-eyebrow">Heads up</span>
+        <p>This <strong>isn't a replacement</strong> for all your deliverables — just a way to stop making boring decks for the moments that don't need one.</p>
+      </div>
+    </div>
     <div class="iwant-launcher">
       <button class="iwant-trigger" aria-haspopup="true" aria-expanded="false">
         <span>I want to...</span>
@@ -1476,6 +1748,52 @@
   </div>
 </section>
 
+<!-- ─── BREAK · reel → where ─── -->
+<div class="section-break" data-break>
+  <span class="section-break-cue">First — pick a workspace</span>
+  <div class="section-break-line"></div>
+  <svg class="section-break-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
+<!-- ─────────────────────── WHERE YOU CAN BUILD ─────────────────────── -->
+<section class="where">
+  <div class="where-inner">
+    <div class="where-header">
+      <h2>Where you can <em>build</em>.</h2>
+      <p class="header-sub">The coding spaces where this kind of work happens.</p>
+    </div>
+    <div class="where-grid">
+      <div class="where-tool">
+        <span class="chip solid-accent">WPP Open</span>
+        <p>Our internal AI platform — brand-safe data, integrations, Companions. <em>HTML artifacts are possible here too</em>, but the functionality can be limited versus the other consumer tools listed here. Use it for what only it can do, then bring the polished work back home.</p>
+      </div>
+      <div class="where-tool">
+        <span class="chip">AI Studio</span>
+        <p>Google's playground for Gemini. Great for quick experiments, image generation, and code prototypes with Flash 2.5 or Pro.</p>
+      </div>
+      <div class="where-tool">
+        <span class="chip">Claude Code</span>
+        <p>Anthropic's coding agent. Lives in your terminal, edits files autonomously, builds full projects from a single brief.</p>
+      </div>
+      <div class="where-tool">
+        <span class="chip">OpenAI Codex</span>
+        <p>OpenAI's coding agent. Terminal and web versions — similar capability to Claude Code, on GPT models.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BREAK · where → intro ─── -->
+<div class="section-break" data-break>
+  <span class="section-break-cue">Three ground rules</span>
+  <div class="section-break-line"></div>
+  <svg class="section-break-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
 <!-- ─────────────────────── INTRO ─────────────────────── -->
 <section class="intro">
   <span class="label">A note before we start</span>
@@ -1498,33 +1816,15 @@
   </div>
 </section>
 
-<!-- ─────────────────────── WHERE YOU CAN BUILD ─────────────────────── -->
-<section class="where">
-  <div class="where-inner">
-    <div class="where-header">
-      <h2>Where you can <em>build</em>.</h2>
-      <p class="header-sub">The coding spaces where this kind of work happens.</p>
-    </div>
-    <div class="where-grid">
-      <div class="where-tool">
-        <span class="chip solid-accent">WPP Open</span>
-        <p>Our internal AI platform. Brand-safe data handling, integrations, Companions live here. Where the work eventually goes.</p>
-      </div>
-      <div class="where-tool">
-        <span class="chip">AI Studio</span>
-        <p>Google's playground for Gemini. Great for quick experiments, image generation, and code prototypes with Flash 2.5 or Pro.</p>
-      </div>
-      <div class="where-tool">
-        <span class="chip">Claude Code</span>
-        <p>Anthropic's coding agent. Lives in your terminal, edits files autonomously, builds full projects from a single brief.</p>
-      </div>
-      <div class="where-tool">
-        <span class="chip">OpenAI Codex</span>
-        <p>OpenAI's coding agent. Terminal and web versions — similar capability to Claude Code, on GPT models.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ─── BREAK · intro → steps (dramatic, into the dark) ─── -->
+<div class="section-break dramatic on-dark" data-break>
+  <span class="section-break-cue">Act II</span>
+  <h2 class="section-break-title">Now — <em>the build</em>.</h2>
+  <div class="section-break-line"></div>
+  <svg class="section-break-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
 
 <!-- ─────────────────────── STEPS ─────────────────────── -->
 <section class="steps-section">
@@ -1748,6 +2048,16 @@
     </div>
   </article>
 </section>
+
+<!-- ─── BREAK · steps → starters (dramatic, back into the light) ─── -->
+<div class="section-break dramatic on-paper-2" data-break>
+  <span class="section-break-cue">Act III</span>
+  <h2 class="section-break-title">Now <em>try one</em> — this week.</h2>
+  <div class="section-break-line"></div>
+  <svg class="section-break-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
 
 <!-- ─────────────────────── LOW-HANGING FRUIT ─────────────────────── -->
 <section class="starters">
@@ -2088,6 +2398,15 @@ Before you build, ask me which audience or product line within the brand I want 
   </div>
 </section>
 
+<!-- ─── BREAK · custom → principles ─── -->
+<div class="section-break on-paper-2" data-break>
+  <span class="section-break-cue">Before you go</span>
+  <div class="section-break-line"></div>
+  <svg class="section-break-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+
 <!-- ─────────────────────── PRINCIPLES (three pillars) ─────────────────────── -->
 <section class="principles">
   <div class="principles-inner">
@@ -2175,6 +2494,43 @@ Before you build, ask me which audience or product line within the brand I want 
 </aside>
 
 <script>
+  // ── Dismissible star callout ──────────────────
+  (function initStarCallout() {
+    const callout = document.getElementById('star-callout');
+    if (!callout) return;
+    const KEY = 'build-with-ai-star-dismissed';
+    if (sessionStorage.getItem(KEY) === '1') {
+      callout.classList.add('dismissed');
+      callout.style.display = 'none';
+      return;
+    }
+    const closeBtn = callout.querySelector('.star-callout-close');
+    closeBtn?.addEventListener('click', () => {
+      callout.classList.add('dismissed');
+      sessionStorage.setItem(KEY, '1');
+      setTimeout(() => { callout.style.display = 'none'; }, 600);
+    });
+  })();
+
+  // ── Reveal section breaks as they enter the viewport ──
+  (function initBreakReveals() {
+    const breaks = document.querySelectorAll('[data-break]');
+    if (!breaks.length) return;
+    if (!('IntersectionObserver' in window)) {
+      breaks.forEach(el => el.classList.add('visible'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
+    breaks.forEach(el => io.observe(el));
+  })();
+
   document.querySelectorAll('.step-head').forEach(head => {
     head.addEventListener('click', () => {
       head.parentElement.classList.toggle('open');
